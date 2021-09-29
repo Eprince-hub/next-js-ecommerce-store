@@ -13,7 +13,7 @@ export const DUUMMY_PRODUCTS = [
     name: 'Branded Bag One',
     title: 'Product title',
     description: 'Wonderful product1',
-    image: './images/p1.jpg',
+    image: 'https://i.imgur.com/b7yABh7m.jpg',
     cost: {
       price: 299,
       currency: 'euro',
@@ -25,7 +25,7 @@ export const DUUMMY_PRODUCTS = [
     name: 'Branded Bag Two',
     title: 'Product title',
     description: 'Wonderful product2',
-    image: './images/p2.jpg',
+    image: 'https://i.imgur.com/l2rJ9qmm.jpg',
     cost: {
       price: 199,
       currency: 'euro',
@@ -36,7 +36,7 @@ export const DUUMMY_PRODUCTS = [
     name: 'Branded Bag Three',
     title: 'Product title',
     description: 'Wonderful product3',
-    image: './images/p3.jpg',
+    image: 'https://i.imgur.com/OZyR1U9m.jpg',
     cost: {
       price: 99,
       currency: 'euro',
@@ -47,7 +47,7 @@ export const DUUMMY_PRODUCTS = [
     name: 'Branded Bag Four',
     title: 'Product title',
     description: 'Wonderful product4',
-    image: './images/p4.jpg',
+    image: 'https://i.imgur.com/oSvYCl9m.jpg',
     cost: {
       price: 170,
       currency: 'euro',
@@ -58,7 +58,7 @@ export const DUUMMY_PRODUCTS = [
     name: 'Branded Bag Five',
     title: 'Product title',
     description: 'Wonderful product5',
-    image: './images/p5.jpg',
+    image: 'https://i.imgur.com/G3ZWEv4m.jpg',
     cost: {
       price: 139,
       currency: 'euro',
@@ -69,7 +69,7 @@ export const DUUMMY_PRODUCTS = [
     name: 'Branded Bag Six',
     title: 'Product title',
     description: 'Wonderful product6',
-    image: './images/p6.jpg',
+    image: 'https://i.imgur.com/h5cWFHCm.jpg',
     cost: {
       price: 219,
       currency: 'euro',
