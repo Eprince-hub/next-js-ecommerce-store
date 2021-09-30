@@ -12,7 +12,10 @@ export default function Home() {
           content="The Best Next eCommerce shop around here"
         />
       </Head>
-      <h1>This Should be my Homepage</h1>
+
+      <section style={{ background: 'green' }}>
+        <h1>This Should be my Homepage</h1>
+      </section>
     </Layout>
   );
 }

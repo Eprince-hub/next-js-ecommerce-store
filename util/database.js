@@ -9,7 +9,7 @@ export const DUUMMY_PRODUCTS = [
   // it should have quantity for users to choose
   // it should have a button add to cart
   {
-    id: 'pr1',
+    id: '1',
     name: 'Branded Bag One',
     title: 'Product title',
     description: 'Wonderful product1',
@@ -21,7 +21,7 @@ export const DUUMMY_PRODUCTS = [
   },
 
   {
-    id: 'pr2',
+    id: '2',
     name: 'Branded Bag Two',
     title: 'Product title',
     description: 'Wonderful product2',
@@ -32,7 +32,7 @@ export const DUUMMY_PRODUCTS = [
     },
   },
   {
-    id: 'pr3',
+    id: '3',
     name: 'Branded Bag Three',
     title: 'Product title',
     description: 'Wonderful product3',
@@ -43,7 +43,7 @@ export const DUUMMY_PRODUCTS = [
     },
   },
   {
-    id: 'pr4',
+    id: '4',
     name: 'Branded Bag Four',
     title: 'Product title',
     description: 'Wonderful product4',
@@ -54,7 +54,7 @@ export const DUUMMY_PRODUCTS = [
     },
   },
   {
-    id: 'pr5',
+    id: '5',
     name: 'Branded Bag Five',
     title: 'Product title',
     description: 'Wonderful product5',
@@ -65,7 +65,51 @@ export const DUUMMY_PRODUCTS = [
     },
   },
   {
-    id: 'pr6',
+    id: '6',
+    name: 'Branded Bag Six',
+    title: 'Product title',
+    description: 'Wonderful product6',
+    image: 'https://i.imgur.com/h5cWFHCm.jpg',
+    cost: {
+      price: 219,
+      currency: 'euro',
+    },
+  },
+  {
+    id: '7',
+    name: 'Branded Bag Six',
+    title: 'Product title',
+    description: 'Wonderful product6',
+    image: 'https://i.imgur.com/h5cWFHCm.jpg',
+    cost: {
+      price: 219,
+      currency: 'euro',
+    },
+  },
+  {
+    id: '8',
+    name: 'Branded Bag Six',
+    title: 'Product title',
+    description: 'Wonderful product6',
+    image: 'https://i.imgur.com/h5cWFHCm.jpg',
+    cost: {
+      price: 219,
+      currency: 'euro',
+    },
+  },
+  {
+    id: '9',
+    name: 'Branded Bag Six',
+    title: 'Product title',
+    description: 'Wonderful product6',
+    image: 'https://i.imgur.com/h5cWFHCm.jpg',
+    cost: {
+      price: 219,
+      currency: 'euro',
+    },
+  },
+  {
+    id: '10',
     name: 'Branded Bag Six',
     title: 'Product title',
     description: 'Wonderful product6',
