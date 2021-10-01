@@ -2,9 +2,8 @@ import { css } from '@emotion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
-import { GiSchoolBag } from 'react-icons/gi';
-import { IconContext } from 'react-icons/lib';
 import { RiLuggageCartFill } from 'react-icons/ri';
+import logo from '../public/images/utilityImages/logo-icon.png';
 
 const headerStyle = css`
   width: 100vw;
@@ -27,6 +26,13 @@ const headerStyle = css`
 
     a {
       text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    img {
+      height: 100px;
     }
 
     span {
@@ -135,9 +141,8 @@ export default function Header() {
       <div className="logoWrapper">
         <Link href="/">
           <a>
-            <IconContext.Provider value={{ color: '#151875', size: '50px' }}>
-              <GiSchoolBag /> <span>Lubag</span>
-            </IconContext.Provider>
+            <Image src={logo} alt="Shop logo" />
+            <span>Lubag</span>
           </a>
         </Link>
       </div>

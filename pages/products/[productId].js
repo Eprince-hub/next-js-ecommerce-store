@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 // import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 
@@ -31,7 +32,7 @@ export default function Product(props) {
 
       <h1>THIS IS A SINGLE PRODUCT PAGE</h1>
       <h2>{props.productDetail.name}</h2>
-      <img src={props.productDetail.image} alt={props.productDetail.title} />
+      <Image src={props.productDetail.image} alt={props.productDetail.title} />
       <h2>{`${props.productDetail.cost.price} ${props.productDetail.cost.currency}`}</h2>
       <p>{props.productDetail.description}</p>
       <button>ADD TO CART</button>
