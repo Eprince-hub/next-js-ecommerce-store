@@ -195,6 +195,31 @@ export default function Cart(props) {
   console.log('ITEMS AMOUNT IN CART');
   console.log(foundUserWithCookies);
 
+  // ########################################
+
+  function increaseQuantityHandler() {
+    const currentCookie = shoppingCartCookies || [];
+
+    console.log('current Cookies');
+    console.log(currentCookie);
+
+    const isItemInCart = props.products.some((product) => {
+      const matchingFound = currentCookie.some((cookieObj) => {
+        return cookieObj.id === Number(product.id);
+      });
+
+      console.log(matchingFound);
+    });
+
+    console.log('checking the isItemCart');
+    console.log(isItemInCart);
+  }
+
+  increaseQuantityHandler();
+
+  // #################################
+  // not working yet
+
   return (
     <Layout>
       <section css={cartStyles}>

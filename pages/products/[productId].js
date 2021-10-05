@@ -44,6 +44,7 @@ export default function Product(props) {
   console.log('Quantity is:');
   console.log(quantityCount);
 
+  // #####################################
   // Function that will add the item to cart when clicked
   function addToCartHandler() {
     const currentCookie = getParsedCookie('cartInside') || []; // we get the current state of the cookie as the browser loads.
