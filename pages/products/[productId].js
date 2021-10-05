@@ -3,6 +3,13 @@ import Image from 'next/image';
 // import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 
+/* import image1 from '../../public/images/1.jpg';
+import image2 from '../../public/images/2.jpg';
+import image3 from '../../public/images/3.jpg';
+import image4 from '../../public/images/4.jpg';
+import image5 from '../../public/images/5.jpg';
+import image6 from '../../public/images/6.jpg';
+ */
 // the dynamic rout for single products where each individual product will be displayed with their detail information.
 
 export default function Product(props) {
@@ -32,7 +39,12 @@ export default function Product(props) {
 
       <h1>THIS IS A SINGLE PRODUCT PAGE</h1>
       <h2>{props.productDetail.name}</h2>
-      <Image src={props.productDetail.image} alt={props.productDetail.title} />
+      <Image
+        src={`/images/${props.productDetail.id}.jpg`}
+        alt={props.productDetail.title}
+        width={400}
+        height={500}
+      />
       <h2>{`${props.productDetail.cost.price} ${props.productDetail.cost.currency}`}</h2>
       <p>{props.productDetail.description}</p>
       <button>ADD TO CART</button>
@@ -43,7 +55,7 @@ export default function Product(props) {
 // ###############################################
 // getServerSideProps receives an object parameter called context which have all of the information
 // about the requests that we make and it has properties that we can use to get the url from the backend.
-// eg console.loog(context.query.productId)
+// eg console.log(context.query.productId)
 export async function getServerSideProps(context) {
   const { DUUMMY_PRODUCTS } = await import('../../util/database');
 

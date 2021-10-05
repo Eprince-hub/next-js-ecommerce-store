@@ -5,6 +5,10 @@ import Layout from '../../components/Layout';
 
 const productPageStyle = css`
   background: purple;
+
+  ul a img {
+    width: 300px;
+  }
 `;
 
 // the index page for all products and where i will display all products
@@ -28,7 +32,11 @@ export default function Products(props) {
               <li key={`product-li-${product.id}`}>
                 <h2>{product.name}</h2>
 
-                <img src={product.image} alt={product.name} />
+                <Link href={`/products/${product.id}`}>
+                  <a>
+                    <img src={`/images/${product.id}.jpg`} alt={product.name} />
+                  </a>
+                </Link>
 
                 <h2>
                   {`${product.cost.price}
