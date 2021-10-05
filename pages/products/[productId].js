@@ -1,21 +1,16 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import { useState } from 'react';
 // import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
+import { getParsedCookie, setParsedCookie } from '../../util/cookies';
 
-/* import image1 from '../../public/images/1.jpg';
-import image2 from '../../public/images/2.jpg';
-import image3 from '../../public/images/3.jpg';
-import image4 from '../../public/images/4.jpg';
-import image5 from '../../public/images/5.jpg';
-import image6 from '../../public/images/6.jpg';
- */
 // the dynamic rout for single products where each individual product will be displayed with their detail information.
 
 export default function Product(props) {
   // The useRouter from next will be used for the dynamic routing
   // we use useRouter when we are routing between front end pages
-  // it allows us to garb the data from the url on the front end!.
+  // it allows us to grab the data from the url on the front end!.
   // when we rout with the backend getServerSideProps or getStaticProps then we don't need useRauter
   // so i am commenting it out for that reason.
   // const router = useRouter();
@@ -28,8 +23,64 @@ export default function Product(props) {
     console.log(window.localStorage);
   } */
 
-  // the image couldnt link so i used a url instead
+  // the image couldn't link so i used a url instead
   // console.log('Image should be: ' + props.productDetail.image);
+
+  // state variable that will receive the cookie object if there is any of an empty array if none.
+  const [cartInside, setCartInside] = useState(
+    getParsedCookie('cartInside') || [],
+  );
+
+  const itemCookieObj = cartInside.find((cookieObj) => {
+    return cookieObj.id === Number(props.productDetail.id); // this finds the cookie object that has the same id as the product obj
+  });
+
+  // setting the initial quantity for the individual items starting from zero
+  const initialQuantityCount = itemCookieObj ? itemCookieObj.quantityCount : 1; // please check this,, if one or zero.
+
+  // useState for the quantity count state variable
+  const [quantityCount, setQuantityCount] = useState(initialQuantityCount);
+
+  console.log('Quantity is:');
+  console.log(quantityCount);
+
+  // Function that will add the item to cart when clicked
+  function addToCartHandler() {
+    const currentCookie = getParsedCookie('cartInside') || []; // we get the current state of the cookie as the browser loads.
+    // please check the above code to make sure that i am not repeating myself
+
+    const isItemInCart = currentCookie.some((cookieObj) => {
+      return cookieObj.id === Number(props.productDetail.id);
+    });
+
+    let newCookie;
+
+    if (!isItemInCart) {
+      // if the item is not already in the cookie which also mean that it is not in cart
+      // then create a new cookie object when the item is added to cart and add it to the existing ones in the new array
+
+      newCookie = [
+        ...currentCookie,
+        { id: Number(props.productDetail.id), quantityCount: 1 }, // add the new created cookie object.
+      ];
+
+      // set the cookie object to the new value and also the cartInside to the new value
+      setParsedCookie('cartInside', newCookie);
+      setCartInside(newCookie);
+    } else {
+      // find out if the product is already in the cookie / cart then only increment the quantity by one on each click.
+      const cookieObjectFound = currentCookie.find((cookieObj) => {
+        return cookieObj.id === Number(props.productDetail.id);
+      });
+
+      cookieObjectFound.quantityCount += 1;
+
+      // also set the cookies and the quantity to the new values
+
+      setParsedCookie('cartInside', currentCookie);
+      setQuantityCount(cookieObjectFound.quantityCount);
+    }
+  }
 
   return (
     <Layout>
@@ -39,15 +90,17 @@ export default function Product(props) {
 
       <h1>THIS IS A SINGLE PRODUCT PAGE</h1>
       <h2>{props.productDetail.name}</h2>
-      <Image
-        src={`/images/${props.productDetail.id}.jpg`}
-        alt={props.productDetail.title}
-        width={400}
-        height={500}
-      />
+      <div>
+        <Image
+          src={`/images/${props.productDetail.id}.jpg`}
+          alt={props.productDetail.title}
+          width={400}
+          height={500}
+        />
+      </div>
       <h2>{`${props.productDetail.cost.price} ${props.productDetail.cost.currency}`}</h2>
       <p>{props.productDetail.description}</p>
-      <button>ADD TO CART</button>
+      <button onClick={addToCartHandler}>ADD TO CART</button>
     </Layout>
   );
 }
