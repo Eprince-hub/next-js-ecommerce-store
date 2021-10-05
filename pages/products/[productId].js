@@ -68,6 +68,7 @@ export async function getServerSideProps(context) {
 
   // this function finds any product that will match the id we have in the product object array
   // with the product that the user wants to view the detail in this case.
+  // check the product url and id to make sure they are numbers and not string to number comparison.
   const productDetail = DUUMMY_PRODUCTS.find((product) => {
     return productUrl === product.id;
   });
