@@ -1,6 +1,9 @@
-import Head from 'next/head';
 // import Image from 'next/image';
+import 'react-slideshow-image/dist/styles.css';
+import Head from 'next/head';
+// import { Slide } from 'react-slideshow-image';
 import Layout from '../components/Layout.js';
+import SlideShow from '../components/SlideShow.js';
 
 export default function Home() {
   return (
@@ -14,7 +17,7 @@ export default function Home() {
       </Head>
 
       <section style={{ background: 'green' }}>
-        <h1>This Should be my Homepage</h1>
+        <SlideShow />
       </section>
     </Layout>
   );
