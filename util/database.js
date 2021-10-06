@@ -25,6 +25,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
+    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
   },
 
   {
@@ -43,6 +44,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
     },
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
+    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
   },
   {
     id: '3',
@@ -60,6 +62,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
     },
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
+    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
   },
   {
     id: '4',
@@ -77,6 +80,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
     },
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
+    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
   },
   {
     id: '5',
@@ -94,6 +98,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
     },
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
+    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
   },
   {
     id: '6',
@@ -111,6 +116,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
     },
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
+    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
   },
   {
     id: '7',
@@ -128,6 +134,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
     },
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
+    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
   },
   {
     id: '8',
@@ -145,6 +152,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
     },
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
+    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
   },
   {
     id: '9',
@@ -162,6 +170,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
     },
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
+    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
   },
   {
     id: '10',
@@ -179,5 +188,6 @@ Please note that all our goods are made-to-order unless stock already exists in 
     },
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
+    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
   },
 ];
