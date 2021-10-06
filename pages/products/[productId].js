@@ -102,6 +102,7 @@ export default function Product(props) {
       <h2>{`${props.productDetail.cost.price} ${props.productDetail.cost.currency}`}</h2>
       <p>{props.productDetail.description}</p>
       <button onClick={addToCartHandler}>ADD TO CART</button>
+      <p></p>
     </Layout>
   );
 }
