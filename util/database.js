@@ -48,7 +48,7 @@ export const DUUMMY_PRODUCTS = [
     title: 'Product title',
     quantity: 0,
     description: 'Wonderful product4',
-    /* image: 'https://i.imgur.com/oSvYCl9m.jpg', */
+    image: 'https://i.imgur.com/oSvYCl9m.jpg',
     cost: {
       price: 170,
     },
@@ -59,7 +59,7 @@ export const DUUMMY_PRODUCTS = [
     title: 'Product title',
     quantity: 0,
     description: 'Wonderful product5',
-    /*  image: 'https://i.imgur.com/G3ZWEv4m.jpg', */
+    image: 'https://i.imgur.com/G3ZWEv4m.jpg',
     cost: {
       price: 139,
     },

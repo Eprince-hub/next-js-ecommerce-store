@@ -4,10 +4,80 @@ import Link from 'next/link';
 import Layout from '../../components/Layout';
 
 const productPageStyle = css`
-  background: purple;
+  width: 100vw;
+  min-height: 100vh;
+  background: #f2f2ff;
+  padding: 2rem;
 
-  ul a img {
-    width: 300px;
+  h1 {
+    text-align: center;
+  }
+
+  .productDisplay {
+    width: 100%;
+    height: inherit;
+
+    ul {
+      width: inherit;
+      height: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      flex-basis: 600px;
+      margin: 0;
+      padding: 1rem 0;
+
+      a img {
+        border-radius: 10px;
+        width: 300px;
+      }
+
+      li {
+        text-align: center;
+        border-radius: 1rem;
+        height: 38rem;
+        padding: 1rem;
+        margin: 0;
+        list-style: none;
+        border: 2px solid grey;
+
+        :hover {
+          border-color: #fb2e86;
+        }
+
+        .priceAndName {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 1.1rem;
+        }
+
+        .viewButton {
+          display: inline-block;
+          font-size: 1.1rem;
+          margin: 0.4rem 0 0 0;
+          text-decoration: none;
+          font-weight: bold;
+          color: black;
+        }
+
+        .cartViewBox {
+          font-weight: bold;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+
+          font-size: 1.1.rem;
+
+          .cartButton {
+            color: black;
+            text-decoration: none;
+          }
+        }
+      }
+    }
   }
 `;
 
@@ -23,40 +93,55 @@ export default function Products(props) {
           <title>ALL PRODUCTS PAGE</title>
         </Head>
 
-        <h1>THIS IS THE PAGE FOR ALL PRODUCTS</h1>
-        <ul>
-          {/* mapping through the props value from the getServerSideProps function to get the array of
+        <h1>SHOP</h1>
+        <div className="productDisplay">
+          <ul>
+            {/* mapping through the props value from the getServerSideProps function to get the array of
 				products objects */}
-          {props.DUUMMY_PRODUCTS.map((product) => {
-            return (
-              <li key={`product-li-${product.id}`}>
-                <h2>{product.name}</h2>
+            {props.DUUMMY_PRODUCTS.map((product) => {
+              return (
+                <li key={`product-li-${product.id}`}>
+                  <Link href={`/products/${product.id}`}>
+                    <a>
+                      <img
+                        src={`/images/${product.id}.jpg`}
+                        alt={product.name}
+                      />{' '}
+                      {/* Next Image ain't Working for me */}
+                    </a>
+                  </Link>
 
-                <Link href={`/products/${product.id}`}>
-                  <a>
-                    <img src={`/images/${product.id}.jpg`} alt={product.name} />
-                  </a>
-                </Link>
+                  <div className="priceAndName">
+                    <p>
+                      <strong>{product.name}</strong>
+                    </p>
+                    <p>
+                      <strong>{`€ ${product.cost.price}`}</strong>
+                    </p>
+                  </div>
 
-                <h2>
-                  {`${product.cost.price}
-                   ${product.cost.currency}`}
-                </h2>
+                  <Link href={`/products/${product.id}`}>
+                    <a className="viewButton">View {product.name}</a>
+                  </Link>
 
-                <p>{product.title}</p>
-
-                <p>{product.description}</p>
-
-                <Link href={`/products/${product.id}`}>
-                  <a>View {product.name}</a>
-                </Link>
-
-                <div>{product.cartInside ? 'Item is in Cart' : ''}</div>
-                {/* Please check this to make sure this is what i want, I would like to display an information about the items cart status */}
-              </li>
-            );
-          })}
-        </ul>
+                  <div>
+                    {product.cartInside ? (
+                      <div className="cartViewBox">
+                        <p>Item is in Cart</p>
+                        <Link href="products/cart">
+                          <a className="cartButton">View in Cart</a>
+                        </Link>
+                      </div>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                  {/* Please check this to make sure this is what i want, I would like to display an information about the items cart status */}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </section>
     </Layout>
   );

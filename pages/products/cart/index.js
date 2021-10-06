@@ -4,7 +4,7 @@ import image from 'next/image';
 import { useEffect, useState } from 'react';
 // import Image from 'next/image';
 import Layout from '../../../components/Layout.js';
-import { getParsedCookie } from '../../../util/cookies';
+import { getParsedCookie, setParsedCookie } from '../../../util/cookies';
 
 const cartStyles = css`
   max-width: 100vw;
@@ -163,10 +163,16 @@ export default function Cart(props) {
   // getting all the cookie objects back from the browser
   const shoppingCartCookies = getParsedCookie('cartInside') || [];
 
-  const [itemQuantity, setItemQuantity] = useState();
+  // setting the quantities
+
+  const [quantityCount, setQuantityCount] = useState(0);
+  const [itemQuantity, setItemQuantity] = useState(0);
+  const [cartInside, setCartInside] = useState(
+    getParsedCookie('cartInside') || [],
+  );
 
   // finding the product id that matches the cookie object id that i fetched from the browser
-  const foundUserWithCookies = shoppingCartCookies.map(
+  const foundProductsWithCookie = shoppingCartCookies.map(
     (individualCookieObj) => {
       const itemAndCookieMatched = props.products.find((product) => {
         return Number(product.id) === individualCookieObj.id;
@@ -178,7 +184,7 @@ export default function Cart(props) {
 
   /*   useEffect(() => {
 
-      const foundUserWithCookies = shoppingCartCookies.map(
+      const foundProductsWithCookie = shoppingCartCookies.map(
         (individualCookieObj) => {
           const itemAndCookieMatched = props.products.find((product) => {
             return Number(product.id) === individualCookieObj.id;
@@ -190,36 +196,105 @@ export default function Cart(props) {
 
   }) */
 
-  console.log('The Quantity IS');
-  console.log(itemQuantity);
   console.log('ITEMS AMOUNT IN CART');
-  console.log(foundUserWithCookies);
+  console.log(foundProductsWithCookie);
 
   // ########################################
+  // function that increase the quantity
+  function increaseItemQuantity() {
+    // getting the current quantity back from the cookie
+    const currentCookieQuantity = getParsedCookie('cartInside') || [];
 
-  function increaseQuantityHandler() {
-    const currentCookie = shoppingCartCookies || [];
+    // the found product with cookie here is an array of all the product objects that is added to the cart
+    foundProductsWithCookie.forEach((expectation) => {
+      currentCookieQuantity.find((singleCookieObj) => {
+        // i looped over it to find a match for the product in the cart and the corresponding cookie.
+        if (Number(expectation.id) === singleCookieObj.id) {
+          // i didn't have to return anything so i just used the value true or false to increase the
+          // quantity of the item in the cart when true and nothing when not.
+          console.log('New value should start here');
+          const newQuantityValue = (expectation.quantity += 1);
 
-    console.log('current Cookies');
-    console.log(currentCookie);
+          // making the cookie quantity the same as the quantity of the items in the cart
+          singleCookieObj.quantityCount = newQuantityValue;
 
-    const isItemInCart = props.products.some((product) => {
-      const matchingFound = currentCookie.some((cookieObj) => {
-        return cookieObj.id === Number(product.id);
+          setItemQuantity(newQuantityValue);
+          // #####################################
+
+          // event.currentTarget = newQuantityValue;
+        }
       });
-
-      console.log(matchingFound);
     });
 
-    console.log('checking the isItemCart');
-    console.log(isItemInCart);
+    // setting the new cookie quantity to reflect in the browser
+    setParsedCookie('cartInside', currentCookieQuantity);
   }
 
-  increaseQuantityHandler();
+  // console.log('Returned products from the server');
+  // console.log(props.products);
 
-  // #################################
-  // not working yet
+  // console.log('Quantity from state');
+  // console.log(itemQuantity);
 
+  // #################################### Try Increment another way
+
+  function makeQuantityIncrement(singleProductObj) {
+    // getting the current quantity back from the cookie
+    const currentCookieQuantity = getParsedCookie('cartInside') || [];
+
+    // the found product with cookie here is an array of all the product objects that is added to the cart
+    currentCookieQuantity.find((singleCookieObj) => {
+      // i looped over it to find a match for the product in the cart and the corresponding cookie.
+      if (Number(singleProductObj.id) === singleCookieObj.id) {
+        // i didn't have to return anything so i just used the value true or false to increase the
+        // quantity of the item in the cart when true and nothing when not.
+        console.log('New value should start here');
+        const newQuantityValue = (singleProductObj.quantity += 1);
+
+        // making the cookie quantity the same as the quantity of the items in the cart
+        singleCookieObj.quantityCount = newQuantityValue;
+
+        setItemQuantity(newQuantityValue);
+      }
+    });
+
+    console.log('Checking new cookie Value');
+    console.log(currentCookieQuantity);
+
+    // setting the new cookie quantity to reflect in the browser
+    setParsedCookie('cartInside', currentCookieQuantity);
+  }
+
+  // function that decreases the quantity
+
+  function makeQuantityDecrement(singleProductObj) {
+    // getting the current quantity back from the cookie
+    const currentCookieQuantity = getParsedCookie('cartInside') || [];
+
+    // the found product with cookie here is an array of all the product objects that is added to the cart
+    currentCookieQuantity.find((singleCookieObj) => {
+      if (Number(singleProductObj.id) === singleCookieObj.id) {
+        console.log('New value should start here');
+        const newQuantityValue = (singleProductObj.quantity -= 1);
+
+        // making the cookie quantity the same as the quantity of the items in the cart
+        singleCookieObj.quantityCount = newQuantityValue;
+
+        setItemQuantity(newQuantityValue);
+      }
+    });
+
+    console.log('Checking new cookie Value');
+    console.log(currentCookieQuantity);
+
+    // setting the new cookie quantity to reflect in the browser
+    setParsedCookie('cartInside', currentCookieQuantity);
+  }
+
+  // Function that handles decrements limit
+  function stopDecrement() {
+    console.log('can not be lower than one');
+  }
   return (
     <Layout>
       <section css={cartStyles}>
@@ -247,8 +322,8 @@ export default function Cart(props) {
         <div className="cartDisplayWrapper">
           <div>
             <h3 className="itemsCount">
-              {foundUserWithCookies.length !== 0
-                ? `ITEMS ADDED TO YOUR SHOPPING CART (${foundUserWithCookies.length})`
+              {foundProductsWithCookie.length !== 0
+                ? `ITEMS ADDED TO YOUR SHOPPING CART (${foundProductsWithCookie.length})`
                 : `Your Cart is Empty`}
             </h3>
           </div>
@@ -264,7 +339,7 @@ export default function Cart(props) {
 
           <div className="tableContentWrapper">
             <ul>
-              {foundUserWithCookies.map((itemWithCookie) => {
+              {foundProductsWithCookie.map((itemWithCookie) => {
                 return (
                   <li key={`item-li- ${itemWithCookie.id}`}>
                     <div className="tableDisplayFlex">
@@ -295,13 +370,43 @@ export default function Cart(props) {
                       </div>
                       {/* Third row */}
                       <div className="quantityBox">
-                        <button>
+                        <button
+                          value={itemWithCookie.id}
+                          onClick={(event) => {
+                            console.log('clicked' + event.currentTarget.value);
+                            itemWithCookie.quantity > 1
+                              ? makeQuantityDecrement(itemWithCookie)
+                              : stopDecrement();
+                          }}
+                        >
                           <span>&#8722;</span>
                         </button>
-                        <p>24{itemWithCookie.quantityCount}</p>
-                        <button>
+
+                        <p>{itemWithCookie.quantity}</p>
+
+                        <button
+                          value={itemWithCookie.id}
+                          onClick={(event) => {
+                            console.log('clicked' + event.currentTarget.value);
+                            makeQuantityIncrement(itemWithCookie);
+                          }}
+                        >
                           <span>&#43;</span>
                         </button>
+                        {/*  <button
+                          value={itemWithCookie.id}
+                          onClick={(event) => {
+                            console.log('clicked' + event.currentTarget.value);
+                            const target = event.currentTarget.value;
+                            if (target !== itemWithCookie.id) {
+                              return;
+                            } else {
+                              increaseItemQuantity();
+                            }
+                          }}
+                        >
+                          <span>&#43;</span>
+                        </button> */}
                       </div>
 
                       {/* Fourth Row */}
@@ -325,12 +430,51 @@ export default function Cart(props) {
 
 // Server side code via getServerSideProps
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  // getting the products from the dataBase
   const { DUUMMY_PRODUCTS } = await import('../../../util/database');
+
+  // i get information back from the cookie in the browser which should be the cookies that the user
+  // has created as he or she clicked the add to cart button which means that the information contained in this cookies
+  // should have a matching product from the database
+  const cookies = context.req.cookies.cartInside || '[]';
+  const cartInside = JSON.parse(cookies);
+
+  // mapping through the products array and getting the match between the information from the cookies and the matching products.
+  const itemInsideCart = DUUMMY_PRODUCTS.map((product) => {
+    const isTheItemInCart = cartInside.some((productCookieObj) => {
+      return Number(product.id) === productCookieObj.id;
+    });
+
+    const userObj = cartInside.find((cookieOBJ) => {
+      return cookieOBJ.id === Number(product.id);
+    });
+
+    if (isTheItemInCart) {
+      return {
+        ...product,
+        cartInside: isTheItemInCart,
+
+        quantity: isTheItemInCart ? userObj.quantityCount : null,
+      };
+    } else {
+      return ''; /* Make sure this is working the way it should */
+    }
+
+    // this was how i did it before but it was still returning all the products to the front end and i wanted to limit that
+    // to only the products that are in the cart.
+    // return {
+    //   ...product,
+    //   cartInside: isTheItemInCart,
+
+    //   // quantity: isTheItemInCart ? userObj.quantityCount : null,
+    // };
+  });
 
   return {
     props: {
-      products: DUUMMY_PRODUCTS,
+      products: itemInsideCart,
+      // products: DUUMMY_PRODUCTS || null
     },
   };
 }
