@@ -22,3 +22,12 @@ export default function Home() {
     </Layout>
   );
 }
+
+export async function getServerSideProps() {
+  const { DUUMMY_PRODUCTS } = await import('../util/database');
+  return {
+    props: {
+      /* Something comes here */
+    },
+  };
+}
