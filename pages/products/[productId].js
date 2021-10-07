@@ -32,9 +32,16 @@ const singlePageStyle = css`
     }
   }
 `;
+
 // the dynamic rout for single products where each individual product will be displayed with their detail information.
 
 export default function Product(props) {
+  // creating state variables to control quantity and color
+
+  const [quantity, setQuantity] = useState(1);
+
+  const [color, setColor] = useState('brown');
+
   // The useRouter from next will be used for the dynamic routing
   // we use useRouter when we are routing between front end pages
   // it allows us to grab the data from the url on the front end!.
@@ -62,10 +69,12 @@ export default function Product(props) {
     return cookieObj.id === Number(props.productDetail.id); // this finds the cookie object that has the same id as the product obj
   });
 
-  // setting the initial quantity for the individual items starting from zero
-  const initialQuantityCount = itemCookieObj ? itemCookieObj.quantityCount : 1; // please check this,, if one or zero.
+  // setting the initial quantity for the individual items starting from quantity state
+  const initialQuantityCount = itemCookieObj
+    ? itemCookieObj.quantityCount
+    : quantity; // please check this,, if one or zero.
 
-  // useState for the quantity count state variable
+  // useState for the cookie quantity count state variable
   const [quantityCount, setQuantityCount] = useState(initialQuantityCount);
 
   console.log('Quantity is:');
@@ -89,7 +98,11 @@ export default function Product(props) {
 
       newCookie = [
         ...currentCookie,
-        { id: Number(props.productDetail.id), quantityCount: 1 }, // add the new created cookie object.
+        {
+          id: Number(props.productDetail.id),
+          quantityCount: Number(quantity),
+          // color: color, // Have to check why this messed up my application
+        }, // add the new created cookie object.
       ];
 
       // set the cookie object to the new value and also the cartInside to the new value
@@ -101,7 +114,16 @@ export default function Product(props) {
         return cookieObj.id === Number(props.productDetail.id);
       });
 
-      cookieObjectFound.quantityCount += 1;
+      // when i add the color value to the object then this changes from number to string. I can't explain why.
+
+      if (cookieObjectFound.quantityCount < Number(quantity)) {
+        cookieObjectFound.quantityCount += Number(quantity);
+      } else {
+        cookieObjectFound.quantityCount += 1;
+      }
+
+      console.log('This is the type of: ');
+      console.log(cookieObjectFound.quantityCount);
 
       // also set the cookies and the quantity to the new values
 
@@ -110,6 +132,19 @@ export default function Product(props) {
     }
   }
 
+  // Functions that controls the quantity
+  function itemQuantity(event) {
+    setQuantity(event.currentTarget.value);
+  }
+
+  console.log('checking quantity state again: ' + Number(quantity));
+
+  const handleColorChange = (event) => {
+    setColor(event.target.value);
+  };
+
+  console.log('the type of quantity is: ' + typeof Number(quantity));
+  console.log(quantity);
   return (
     <Layout>
       <Head>
@@ -143,6 +178,45 @@ export default function Product(props) {
               <strong>FITTING GUIDE:</strong>
             </p>
             <p>{props.productDetail.fitting}</p>
+            <div>
+              <p>
+                <strong>COLOUR:</strong>
+              </p>
+              <div>
+                <p>placeholder</p>
+
+                <select defaultValue={color} onChange={handleColorChange}>
+                  <option value={props.productDetail.colorChoice.brown}>
+                    {props.productDetail.colorChoice.brown}
+                  </option>
+                  <option value={props.productDetail.colorChoice.black}>
+                    {props.productDetail.colorChoice.black}
+                  </option>
+                  <option value={props.productDetail.colorChoice.grey}>
+                    {props.productDetail.colorChoice.grey}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <p>
+                <strong>QUANTITY:</strong>
+              </p>
+              <div>
+                <form>
+                  <label htmlFor="quantity">
+                    <input
+                      type="number"
+                      name="quantity"
+                      defaultValue={1}
+                      min="1"
+                      onChange={itemQuantity}
+                    />
+                  </label>
+                </form>
+              </div>
+            </div>
 
             <button onClick={addToCartHandler}>ADD TO CART</button>
             <p></p>
