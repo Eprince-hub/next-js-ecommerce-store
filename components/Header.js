@@ -171,9 +171,11 @@ export default function Header() {
           <FaHeart />
         </button>
 
-        <button className="cartIcon">
-          <RiLuggageCartFill />
-        </button>
+        <Link href="/products/cart" className="cartIcon">
+          <a>
+            <RiLuggageCartFill />
+          </a>
+        </Link>
         <button className="logIn">Login</button>
         <button className="register">Register</button>
       </div>

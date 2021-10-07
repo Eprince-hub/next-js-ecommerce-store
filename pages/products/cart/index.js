@@ -336,6 +336,7 @@ export default function Cart(props) {
           <div>
             <Link href="/products">
               <a className="backToShopping">BACK TO SHOPPING</a>
+              {/* Check here for duplicate */}
             </Link>
           </div>
           <div>

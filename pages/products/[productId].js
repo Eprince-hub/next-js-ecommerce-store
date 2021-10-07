@@ -1,15 +1,29 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 // import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import { getParsedCookie, setParsedCookie } from '../../util/cookies';
 
 const singlePageStyle = css`
-  background: red;
   width: 100vw;
   min-height: 100vh;
+
+  .gettingBackToShop {
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    text-decoration: none;
+    margin: 0.6rem 0 0.6rem 6rem;
+    display: inline-block;
+  }
+
+  h1 {
+    text-align: center;
+  }
 
   .flexDisplayBox {
     width: 100%;
@@ -18,18 +32,78 @@ const singlePageStyle = css`
     justify-content: space-around;
 
     .productImageBox {
-      background: green;
-
       .imageBox {
         padding-top: 0.5rem;
         text-align: center;
         width: 36rem;
+        border-radius: 20px;
+      }
+
+      .priceDisplay {
+        display: flex;
+        justify-content: space-around;
+        width: 90%;
+        margin: 0 auto;
+        font-size: 1.2rem;
+        padding: 0.4rem 1rem;
       }
     }
 
     .productInfoBox {
-      background: gold;
+      padding: 0 2rem;
+      font-size: 1rem;
+      border-left: 3px solid #ffc0cb;
+
+      .selectBox {
+        display: inline-block;
+        select {
+          background: #0563af;
+          color: white;
+          padding: 12px;
+          width: 150px;
+          border: none;
+          font-size: 20px;
+          box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+          --webkit-appearance: button;
+          appearance: button;
+          outline: none;
+        }
+
+        select option {
+          padding: 30px;
+          font-weight: bold;
+        }
+      }
+
+      .quantityBox {
+        padding-top: 4.5rem;
+
+        input {
+          background: #0563af;
+          color: white;
+          padding: 12px;
+          width: 150px;
+          border: none;
+          font-size: 20px;
+          box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+          --webkit-appearance: button;
+          appearance: button;
+          outline: none;
+        }
+      }
     }
+  }
+
+  button {
+    font-weight: bolder;
+    background: #151875;
+    border: none;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    color: white;
+    padding: 12px;
+    width: 150px;
+    margin: 2rem 0 2rem 0;
+    cursor: pointer;
   }
 `;
 
@@ -116,11 +190,13 @@ export default function Product(props) {
 
       // when i add the color value to the object then this changes from number to string. I can't explain why.
 
-      if (cookieObjectFound.quantityCount < Number(quantity)) {
-        cookieObjectFound.quantityCount += Number(quantity);
-      } else {
-        cookieObjectFound.quantityCount += 1;
-      }
+      cookieObjectFound.quantityCount += 1;
+      // the addition is not totally right,, tried to fix it with this code here
+      // if (cookieObjectFound.quantityCount < Number(quantity)) {
+      //   cookieObjectFound.quantityCount += Number(quantity);
+      // } else {
+      //   cookieObjectFound.quantityCount += 1;
+      // }
 
       console.log('This is the type of: ');
       console.log(cookieObjectFound.quantityCount);
@@ -153,6 +229,10 @@ export default function Product(props) {
       <section css={singlePageStyle}>
         <h1>{props.productDetail.name}</h1>
 
+        <Link href="/products">
+          <a className="gettingBackToShop">BACK TO SHOPPING</a>
+        </Link>
+
         <div className="flexDisplayBox">
           <div className="productImageBox">
             <div className="imageBox">
@@ -164,7 +244,8 @@ export default function Product(props) {
               />
             </div>
 
-            <p>
+            <p className="priceDisplay">
+              <span>{props.productDetail.name}</span>
               <strong>€ {props.productDetail.price}</strong>
             </p>
           </div>
@@ -183,43 +264,42 @@ export default function Product(props) {
                 <strong>COLOUR:</strong>
               </p>
               <div>
-                <p>placeholder</p>
+                <p>{color}</p>
 
-                <select defaultValue={color} onChange={handleColorChange}>
-                  <option value={props.productDetail.colorChoice.brown}>
-                    {props.productDetail.colorChoice.brown}
-                  </option>
-                  <option value={props.productDetail.colorChoice.black}>
-                    {props.productDetail.colorChoice.black}
-                  </option>
-                  <option value={props.productDetail.colorChoice.grey}>
-                    {props.productDetail.colorChoice.grey}
-                  </option>
-                </select>
+                <div className="selectBox">
+                  <select defaultValue={color} onChange={handleColorChange}>
+                    <option value={props.productDetail.colorChoice.brown}>
+                      {props.productDetail.colorChoice.brown}
+                    </option>
+                    <option value={props.productDetail.colorChoice.black}>
+                      {props.productDetail.colorChoice.black}
+                    </option>
+                    <option value={props.productDetail.colorChoice.grey}>
+                      {props.productDetail.colorChoice.grey}
+                    </option>
+                  </select>
+                </div>
               </div>
             </div>
 
-            <div>
+            <div className="quantityBox">
               <p>
                 <strong>QUANTITY:</strong>
               </p>
               <div>
-                <form>
-                  <label htmlFor="quantity">
-                    <input
-                      type="number"
-                      name="quantity"
-                      defaultValue={1}
-                      min="1"
-                      onChange={itemQuantity}
-                    />
-                  </label>
-                </form>
+                <label htmlFor="quantity">
+                  <input
+                    type="number"
+                    name="quantity"
+                    defaultValue={1}
+                    min="1"
+                    onChange={itemQuantity}
+                  />
+                </label>
               </div>
             </div>
 
             <button onClick={addToCartHandler}>ADD TO CART</button>
-            <p></p>
           </div>
         </div>
       </section>
