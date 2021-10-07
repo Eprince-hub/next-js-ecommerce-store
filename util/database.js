@@ -19,13 +19,12 @@ Please note variations in leather colour occur naturally between hide to hide. T
 
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
-    cost: {
-      price: 299,
-    },
+
+    price: 299,
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
+    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
   },
 
   {
@@ -39,12 +38,12 @@ Please note variations in leather colour occur naturally between hide to hide. T
 
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
-    cost: {
-      price: 199,
-    },
+
+    price: 199,
+
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
+    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
   },
   {
     id: '3',
@@ -57,12 +56,12 @@ Please note variations in leather colour occur naturally between hide to hide. T
 
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
-    cost: {
-      price: 99,
-    },
+
+    price: 99,
+
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
+    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
   },
   {
     id: '4',
@@ -75,12 +74,12 @@ Please note variations in leather colour occur naturally between hide to hide. T
 
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/oSvYCl9m.jpg',
-    cost: {
-      price: 170,
-    },
+
+    price: 170,
+
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
+    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
   },
   {
     id: '5',
@@ -93,12 +92,12 @@ Please note variations in leather colour occur naturally between hide to hide. T
 
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/G3ZWEv4m.jpg',
-    cost: {
-      price: 139,
-    },
+
+    price: 139,
+
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
+    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
   },
   {
     id: '6',
@@ -111,12 +110,12 @@ Please note variations in leather colour occur naturally between hide to hide. T
 
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
-    cost: {
-      price: 219,
-    },
+
+    price: 219,
+
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
+    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
   },
   {
     id: '7',
@@ -129,12 +128,12 @@ Please note variations in leather colour occur naturally between hide to hide. T
 
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
-    cost: {
-      price: 219,
-    },
+
+    price: 219,
+
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
+    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
   },
   {
     id: '8',
@@ -147,12 +146,12 @@ Please note variations in leather colour occur naturally between hide to hide. T
 
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
-    cost: {
-      price: 219,
-    },
+
+    price: 219,
+
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
+    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
   },
   {
     id: '9',
@@ -165,12 +164,12 @@ Please note variations in leather colour occur naturally between hide to hide. T
 
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
-    cost: {
-      price: 219,
-    },
+
+    price: 219,
+
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
+    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
   },
   {
     id: '10',
@@ -183,11 +182,11 @@ Please note variations in leather colour occur naturally between hide to hide. T
 
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
-    cost: {
-      price: 219,
-    },
+
+    price: 219,
+
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', red: 'red' },
+    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
   },
 ];

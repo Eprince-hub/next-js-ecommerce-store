@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -5,6 +6,32 @@ import { useState } from 'react';
 import Layout from '../../components/Layout';
 import { getParsedCookie, setParsedCookie } from '../../util/cookies';
 
+const singlePageStyle = css`
+  background: red;
+  width: 100vw;
+  min-height: 100vh;
+
+  .flexDisplayBox {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+
+    .productImageBox {
+      background: green;
+
+      .imageBox {
+        padding-top: 0.5rem;
+        text-align: center;
+        width: 36rem;
+      }
+    }
+
+    .productInfoBox {
+      background: gold;
+    }
+  }
+`;
 // the dynamic rout for single products where each individual product will be displayed with their detail information.
 
 export default function Product(props) {
@@ -86,23 +113,42 @@ export default function Product(props) {
   return (
     <Layout>
       <Head>
-        <title>SINGLE PRODUCT: {props.productDetail.title} PAGE</title>
+        <title>SINGLE PRODUCT: {props.productDetail.title}</title>
       </Head>
+      <section css={singlePageStyle}>
+        <h1>{props.productDetail.name}</h1>
 
-      <h1>THIS IS A SINGLE PRODUCT PAGE</h1>
-      <h2>{props.productDetail.name}</h2>
-      <div>
-        <Image
-          src={`/images/${props.productDetail.id}.jpg`}
-          alt={props.productDetail.title}
-          width={400}
-          height={500}
-        />
-      </div>
-      <h2>{`${props.productDetail.cost.price} ${props.productDetail.cost.currency}`}</h2>
-      <p>{props.productDetail.description}</p>
-      <button onClick={addToCartHandler}>ADD TO CART</button>
-      <p></p>
+        <div className="flexDisplayBox">
+          <div className="productImageBox">
+            <div className="imageBox">
+              <Image
+                src={`/images/${props.productDetail.id}.jpg`}
+                alt={props.productDetail.title}
+                width={500}
+                height={600}
+              />
+            </div>
+
+            <p>
+              <strong>€ {props.productDetail.price}</strong>
+            </p>
+          </div>
+          <div className="productInfoBox">
+            <p>
+              <strong>DETAILS:</strong>
+            </p>
+            <p>{props.productDetail.description}</p>
+
+            <p>
+              <strong>FITTING GUIDE:</strong>
+            </p>
+            <p>{props.productDetail.fitting}</p>
+
+            <button onClick={addToCartHandler}>ADD TO CART</button>
+            <p></p>
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 }

@@ -116,7 +116,7 @@ export default function Products(props) {
                       <strong>{product.name}</strong>
                     </p>
                     <p>
-                      <strong>{`€ ${product.cost.price}`}</strong>
+                      <strong>{`€ ${product.price}`}</strong>
                     </p>
                   </div>
 

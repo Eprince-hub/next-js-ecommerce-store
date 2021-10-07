@@ -189,6 +189,10 @@ export default function Cart(props) {
     },
   );
 
+  // All the items in the cart
+  console.log('ITEMS AMOUNT IN CART');
+  console.log(foundProductsWithCookie);
+
   /*   useEffect(() => {
 
       const foundProductsWithCookie = shoppingCartCookies.map(
@@ -202,9 +206,6 @@ export default function Cart(props) {
       );
 
   }) */
-
-  console.log('ITEMS AMOUNT IN CART');
-  console.log(foundProductsWithCookie);
 
   // ########################################
   // function that increase the quantity
@@ -441,13 +442,15 @@ export default function Cart(props) {
                       <div className="priceBox">
                         <h2>
                           € {''}
-                          {itemWithCookie.cost.price}
+                          {itemWithCookie.price}
                         </h2>
                       </div>
                     </div>
                   </li>
                 );
               })}
+
+              {/* <h1>{itemsPrice.toFixed(2)}</h1> */}
             </ul>
           </div>
         </div>
