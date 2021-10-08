@@ -320,7 +320,9 @@ export default function Cart(props) {
   }
   // #######################################
   return (
-    <Layout>
+    <Layout anotherName="Nothing">
+      {' '}
+      {/* Check please,, trying to pass props through the layout component */}
       <section css={cartStyles}>
         <Head>
           <title>Cart Section</title>
