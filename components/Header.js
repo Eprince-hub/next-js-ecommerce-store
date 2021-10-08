@@ -2,7 +2,6 @@ import { css } from '@emotion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
-import { RiLuggageCartFill } from 'react-icons/ri';
 import logo from '../public/images/utilityImages/logo-icon.png';
 
 const headerStyle = css`
@@ -111,12 +110,36 @@ const headerStyle = css`
   }
 
   .userTabs {
-    width: 200px;
+    width: 260px;
     display: flex;
     justify-content: center;
     gap: 6px;
     position: relative;
     bottom: 2.5rem;
+    margin-top: 20px;
+
+    .shopCartWrapper {
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      font-weight: bold;
+
+      p {
+        display: inline;
+        position: absolute;
+        left: 30px;
+        bottom: 10px;
+        color: #191959;
+        font-size: 1.1rem;
+      }
+
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
 
     .wishListIcon,
     .cartIcon {
@@ -134,8 +157,11 @@ const headerStyle = css`
     }
   }
 `;
+// There is a problem with the information i am getting from the cart about the quantity and i have to check it
+export default function Header(props) {
+  console.log('from header here');
+  console.log(props.amount);
 
-export default function Header() {
   return (
     <header css={headerStyle}>
       <div className="logoWrapper">
@@ -171,11 +197,24 @@ export default function Header() {
           <FaHeart />
         </button>
 
-        <Link href="/products/cart" className="cartIcon">
-          <a>
-            <RiLuggageCartFill />
-          </a>
-        </Link>
+        <div className="shopCartWrapper">
+          <p>{props.amount}</p>
+          <Link href="/products/cart" className="cartIcon">
+            <a>
+              {props.amount < 1 ? (
+                <img
+                  src="../images/utilityImages/cart-empty.png"
+                  alt="shopping cart icon"
+                />
+              ) : (
+                <img
+                  src="../images/utilityImages/cart-empty.png"
+                  alt="shopping cart icon"
+                />
+              )}
+            </a>
+          </Link>
+        </div>
         <button className="logIn">Login</button>
         <button className="register">Register</button>
       </div>

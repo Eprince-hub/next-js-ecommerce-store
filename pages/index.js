@@ -2,14 +2,56 @@
 import 'react-slideshow-image/dist/styles.css';
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import Link from 'next/link';
 // import { Slide } from 'react-slideshow-image';
 import Layout from '../components/Layout.js';
 import SlideShow from '../components/SlideShow.js';
 
 const homePageStyle = css`
-  background: green;
-  img.imagemin {
-    width: 300px;
+  background: #f2f2ff;
+  width: 100vw;
+  min-height: 100vh;
+
+  h1 {
+    text-align: center;
+  }
+
+  .productWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    ul {
+      width: 80%;
+      justify-content: space-around;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+
+      li {
+        display: relative;
+        text-align: center;
+        list-style: none;
+        margin-bottom: 1rem;
+        padding: 1rem 0;
+
+        p {
+          font-weight: bold;
+        }
+
+        .viewButton {
+          text-decoration: none;
+          font-size: 1.1rem;
+          padding: 0.1rem 0.5rem;
+          font-weight: bold;
+        }
+      }
+    }
+    img.imagemin {
+      height: 500px;
+      border-radius: 20px;
+    }
   }
 `;
 
@@ -29,8 +71,8 @@ export default function Home(props) {
       <section css={homePageStyle}>
         <SlideShow />
 
+        <h1>LUXURY LIFESTYLE ACCESSORIES WITH DOWN TO EARTH AESTHETICS</h1>
         <section className="productWrapper">
-          <h1>LUXURY LIFESTYLE ACCESSORIES WITH DOWN TO EARTH AESTHETICS</h1>
           <ul>
             {props.products
               .filter((product, index) => index <= 8)
@@ -39,11 +81,16 @@ export default function Home(props) {
                   <li key={product.id}>
                     <div>
                       <div>
-                        <img
-                          className="imagemin"
-                          src={product.image}
-                          alt={product.name}
-                        />
+                        <Link href="/products">
+                          <a>
+                            {' '}
+                            <img
+                              className="imagemin"
+                              src={product.image}
+                              alt={product.name}
+                            />
+                          </a>
+                        </Link>
                       </div>
                       <div>
                         <div>
@@ -52,6 +99,10 @@ export default function Home(props) {
                         </div>
                       </div>
                     </div>
+
+                    <Link href="/products">
+                      <a className="viewButton">View products</a>
+                    </Link>
                   </li>
                 );
               })}

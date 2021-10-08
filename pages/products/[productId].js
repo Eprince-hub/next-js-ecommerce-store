@@ -206,6 +206,8 @@ export default function Product(props) {
       setParsedCookie('cartInside', currentCookie);
       setQuantityCount(cookieObjectFound.quantityCount);
     }
+
+    alert('Item added to Cart');
   }
 
   // Functions that controls the quantity

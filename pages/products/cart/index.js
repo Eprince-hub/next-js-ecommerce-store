@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Link from 'next/link';
 // import image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // import Image from 'next/image';
 import Layout from '../../../components/Layout.js';
 import { getParsedCookie, setParsedCookie } from '../../../util/cookies';
@@ -173,10 +173,14 @@ export default function Cart(props) {
 
   // setting the quantities
 
+  // i must check this code and how it works is is still equals zero when i log it in
   const [itemQuantity, setItemQuantity] = useState(0);
   // const [cartInside, setCartInside] = useState(
   //   getParsedCookie('cartInside') || [],
+  // console.log('This is the item Q State', itemQuantity);
   // );
+
+  const [shoppingCartQuantity, setShoppingCartQuantity] = useState(0);
 
   // finding the product id that matches the cookie object id that i fetched from the browser
   const foundProductsWithCookie = shoppingCartCookies.map(
@@ -319,8 +323,17 @@ export default function Cart(props) {
     }
   }
   // #######################################
+
+  console.log(foundProductsWithCookie);
+
+  useEffect(() => {
+    setShoppingCartQuantity(foundProductsWithCookie.length);
+  }, []);
+
+  console.log('newstateQuantity: ', shoppingCartQuantity);
+
   return (
-    <Layout anotherName="Nothing">
+    <Layout amount={shoppingCartQuantity}>
       {' '}
       {/* Check please,, trying to pass props through the layout component */}
       <section css={cartStyles}>
