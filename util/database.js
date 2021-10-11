@@ -20,7 +20,7 @@ Please note variations in leather colour occur naturally between hide to hide. T
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
 
-    price: 299,
+    price: 299.56,
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
@@ -39,7 +39,7 @@ Please note variations in leather colour occur naturally between hide to hide. T
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
 
-    price: 199,
+    price: 199.56,
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
@@ -57,7 +57,7 @@ Please note variations in leather colour occur naturally between hide to hide. T
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
 
-    price: 99,
+    price: 99.56,
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
@@ -75,7 +75,7 @@ Please note variations in leather colour occur naturally between hide to hide. T
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/oSvYCl9m.jpg',
 
-    price: 170,
+    price: 170.56,
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
@@ -93,7 +93,7 @@ Please note variations in leather colour occur naturally between hide to hide. T
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/G3ZWEv4m.jpg',
 
-    price: 139,
+    price: 139.56,
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
@@ -111,7 +111,7 @@ Please note variations in leather colour occur naturally between hide to hide. T
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
 
-    price: 219,
+    price: 219.56,
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
@@ -129,7 +129,7 @@ Please note variations in leather colour occur naturally between hide to hide. T
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
 
-    price: 219,
+    price: 219.56,
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
@@ -147,7 +147,7 @@ Please note variations in leather colour occur naturally between hide to hide. T
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
 
-    price: 219,
+    price: 219.56,
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
@@ -165,7 +165,7 @@ Please note variations in leather colour occur naturally between hide to hide. T
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
 
-    price: 219,
+    price: 219.56,
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
@@ -183,7 +183,7 @@ Please note variations in leather colour occur naturally between hide to hide. T
 Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
     image: 'https://i.imgur.com/h5cWFHC.jpg',
 
-    price: 219,
+    price: 219.56,
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,

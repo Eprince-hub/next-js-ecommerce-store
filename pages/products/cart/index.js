@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 // import Image from 'next/image';
 import Layout from '../../../components/Layout.js';
 import { getParsedCookie, setParsedCookie } from '../../../util/cookies';
+import { calculateTotalPrice } from '../../../util/priceChecker';
 
 const cartStyles = css`
   max-width: 100vw;
@@ -171,6 +172,10 @@ export default function Cart(props) {
   // getting all the cookie objects back from the browser
   const shoppingCartCookies = getParsedCookie('cartInside') || [];
 
+  // setting state variables for all prices related codes!
+
+  const [productsPrice, setProductsPrice] = useState(0);
+
   // setting the quantities
 
   // i must check this code and how it works is is still equals zero when i log it in
@@ -196,6 +201,31 @@ export default function Cart(props) {
   // All the items in the cart
   console.log('ITEMS AMOUNT IN CART');
   console.log(foundProductsWithCookie);
+
+  console.log('TRYING THE REDUCED ARRAY METHOD');
+
+  useEffect(() => {
+    setProductsPrice(calculateTotalPrice(foundProductsWithCookie));
+  }, [foundProductsWithCookie]);
+
+  console.log('prices from state: ', productsPrice);
+
+  // calculating the tax Price and shipping price and then add all together as the total price.
+  const taxPrice = productsPrice * 0.14;
+  const shippingPrice = productsPrice > 2000 ? 0 : 50;
+  const totalPrice = Number(productsPrice) + (taxPrice + shippingPrice);
+
+  /*
+
+    const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
+  const taxPrice = itemsPrice * 0.14;
+
+  const shippingPrice = itemsPrice > 2000 ? 0 : 50;
+  const totalPrice = itemsPrice + taxPrice + shippingPrice;
+
+
+
+  */
 
   /*   useEffect(() => {
 
@@ -330,7 +360,7 @@ export default function Cart(props) {
     setShoppingCartQuantity(foundProductsWithCookie.length);
   }, []);
 
-  console.log('newstateQuantity: ', shoppingCartQuantity);
+  // console.log('newstateQuantity: ', shoppingCartQuantity);
 
   return (
     <Layout amount={shoppingCartQuantity}>
@@ -466,7 +496,27 @@ export default function Cart(props) {
                 );
               })}
 
-              {/* <h1>{itemsPrice.toFixed(2)}</h1> */}
+              <div className="totalPriceDisplayBox">
+                <div className="itemsPrice">
+                  <p>Items Price</p>
+                  <strong>{`€ ${productsPrice}`}</strong>
+                </div>
+
+                <div className="taxPrice">
+                  <p>Tax Price</p>
+                  <strong>{`€ ${taxPrice.toFixed(2)}`}</strong>
+                </div>
+
+                <div className="shippingPrice">
+                  <p>Shipping Price</p>
+                  <strong>{`€ ${shippingPrice.toFixed(2)}`}</strong>
+                </div>
+
+                <div className="totalPrice">
+                  <p>Total Price</p>
+                  <strong>{`€ ${totalPrice.toFixed(2)}`}</strong>
+                </div>
+              </div>
             </ul>
           </div>
         </div>
@@ -502,6 +552,7 @@ export async function getServerSideProps(context) {
         ...product,
         cartInside: isTheItemInCart,
 
+        // if the item is in the cart then the quantity i got back from the cookie should be added to it, if not, it should be null.
         quantity: isTheItemInCart ? userObj.quantityCount : null,
       };
     } else {
