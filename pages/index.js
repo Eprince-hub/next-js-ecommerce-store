@@ -3,7 +3,6 @@ import 'react-slideshow-image/dist/styles.css';
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useState } from 'react';
 // import { Slide } from 'react-slideshow-image';
 import Layout from '../components/Layout.js';
 import SlideShow from '../components/SlideShow.js';

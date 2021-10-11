@@ -215,7 +215,6 @@ export default function Cart(props) {
   // getting all the cookie objects back from the browser
   const shoppingCartCookies = getParsedCookie('cartInside') || [];
 
-  props.setCartQuantity(100);
   // setting state variables for all prices related codes!
 
   const [productsPrice, setProductsPrice] = useState(0);
@@ -247,12 +246,12 @@ export default function Cart(props) {
   console.log(foundProductsWithCookie);
 
   useEffect(() => {
-    //  props.setCartQuantity(foundProductsWithCookie.length);
+    props.setCartQuantity(foundProductsWithCookie.length);
     setProductsPrice(calculateTotalPrice(foundProductsWithCookie));
   }, [foundProductsWithCookie]);
 
   // calculating the tax Price and shipping price and then add all together as the total price.
-  const taxPrice = productsPrice * 0.14;
+  const taxPrice = productsPrice * 0.13;
   const shippingPrice = productsPrice > 2000 ? 0 : 50;
   const totalPrice = Number(productsPrice) + (taxPrice + shippingPrice);
 
@@ -502,10 +501,7 @@ export default function Cart(props) {
 
                       {/* Fourth Row */}
                       <div className="priceBox">
-                        <h2>
-                          € {''}
-                          {itemWithCookie.price}
-                        </h2>
+                        <h2>{`€ ${itemWithCookie.price}`}</h2>
                       </div>
                     </div>
                   </li>
