@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 
 function MyApp({ Component, pageProps }) {
-  const [shoppingCartQuantity, setShoppingCartQuantity] = useState(70);
+  const [shoppingCartQuantity, setShoppingCartQuantity] = useState();
   console.log('props from app.js: ', pageProps);
   return (
     <>
