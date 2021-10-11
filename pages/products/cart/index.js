@@ -12,6 +12,7 @@ const cartStyles = css`
   max-width: 100vw;
   min-height: 100vh;
   background: #f2f2ff;
+  padding-bottom: 1rem;
 
   .heading {
     text-align: center;
@@ -51,6 +52,8 @@ const cartStyles = css`
     width: 70%;
     margin: 0 auto;
     background: #e1d1f5;
+    border-radius: 10px;
+    padding: 0.5rem;
 
     .itemsCount {
       margin-left: 0.5rem;
@@ -107,7 +110,7 @@ const cartStyles = css`
               margin-left: 1rem;
             }
             .quantityBox {
-              width: 100px;
+              width: 110px;
               height: 40px;
               background: #fefefe;
               display: flex;
@@ -115,6 +118,7 @@ const cartStyles = css`
               align-items: center;
               font-size: 1.2rem;
               border-radius: 10rem;
+              margin-right: -1.5rem;
 
               p {
                 font-weight: bolder;
@@ -155,20 +159,59 @@ const cartStyles = css`
             .priceBox {
               background: #353434;
               color: white;
-              width: 100px;
+              width: 110px;
               display: inline-flex;
               justify-content: center;
               align-items: center;
               padding: 0;
+              border-radius: 8px;
             }
           }
         }
       }
     }
   }
+
+  .totalPriceDisplayBox {
+    padding: 0 0.5rem;
+    width: 100%auto;
+    .itemsPrice,
+    .taxPrice,
+    .shippingPrice,
+    .totalPrice {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      p {
+        font-size: 1.2rem;
+      }
+
+      strong {
+        font-size: 1.2rem;
+      }
+    }
+
+    .totalPrice strong {
+      font-size: 1.5rem;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 0.5rem;
+      background: #353434;
+      color: white;
+      border-radius: 8px;
+    }
+
+    .totalPrice {
+      font-weight: bold;
+    }
+  }
 `;
 
 export default function Cart(props) {
+  console.log('props from the cart page: ', props);
   // getting all the cookie objects back from the browser
   const shoppingCartCookies = getParsedCookie('cartInside') || [];
 
@@ -205,6 +248,7 @@ export default function Cart(props) {
   console.log('TRYING THE REDUCED ARRAY METHOD');
 
   useEffect(() => {
+    props.setCartQuantity(foundProductsWithCookie.length);
     setProductsPrice(calculateTotalPrice(foundProductsWithCookie));
   }, [foundProductsWithCookie]);
 
@@ -215,31 +259,11 @@ export default function Cart(props) {
   const shippingPrice = productsPrice > 2000 ? 0 : 50;
   const totalPrice = Number(productsPrice) + (taxPrice + shippingPrice);
 
-  /*
-
-    const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
-  const taxPrice = itemsPrice * 0.14;
-
-  const shippingPrice = itemsPrice > 2000 ? 0 : 50;
-  const totalPrice = itemsPrice + taxPrice + shippingPrice;
-
-
-
-  */
-
-  /*   useEffect(() => {
-
-      const foundProductsWithCookie = shoppingCartCookies.map(
-        (individualCookieObj) => {
-          const itemAndCookieMatched = props.products.find((product) => {
-            return Number(product.id) === individualCookieObj.id;
-          });
-
-          return itemAndCookieMatched;
-        },
-      );
-
-  }) */
+  // i was implementing the cart count like this before but i added both the cart count and the product price to one useEffect up there!
+  // setting the shoppingCart quantity
+  // useEffect(() => {
+  //   setShoppingCartQuantity(foundProductsWithCookie.length);
+  // }, []);
 
   // ########################################
   // function that increase the quantity
@@ -354,16 +378,11 @@ export default function Cart(props) {
   }
   // #######################################
 
-  console.log(foundProductsWithCookie);
-
-  useEffect(() => {
-    setShoppingCartQuantity(foundProductsWithCookie.length);
-  }, []);
-
-  // console.log('newstateQuantity: ', shoppingCartQuantity);
-
   return (
-    <Layout amount={shoppingCartQuantity}>
+    <Layout
+      catQuantity={props.catQuantity}
+      setCartQuantity={props.setCartQuantity}
+    >
       {' '}
       {/* Check please,, trying to pass props through the layout component */}
       <section css={cartStyles}>

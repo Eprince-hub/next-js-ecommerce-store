@@ -1,6 +1,6 @@
-import fs from 'node:fs';
+// import fs from 'node:fs';
 
-console.log(fs);
+// console.log(fs);
 
 export const DUUMMY_PRODUCTS = [
   // this product object should have an array of images to display on the detail product page.
@@ -24,7 +24,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
+    colorChoice: '',
   },
 
   {
@@ -43,7 +43,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
+    colorChoice: '',
   },
   {
     id: '3',
@@ -61,7 +61,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
+    colorChoice: '',
   },
   {
     id: '4',
@@ -79,7 +79,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
+    colorChoice: '',
   },
   {
     id: '5',
@@ -97,7 +97,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
+    colorChoice: '',
   },
   {
     id: '6',
@@ -115,7 +115,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
+    colorChoice: '',
   },
   {
     id: '7',
@@ -133,7 +133,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
+    colorChoice: '',
   },
   {
     id: '8',
@@ -151,7 +151,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
+    colorChoice: '',
   },
   {
     id: '9',
@@ -169,7 +169,7 @@ Please note that all our goods are made-to-order unless stock already exists in 
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
+    colorChoice: '',
   },
   {
     id: '10',
@@ -187,6 +187,6 @@ Please note that all our goods are made-to-order unless stock already exists in 
 
     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
 54cm (length) x 34cm (width) x 34cm (height)`,
-    colorChoice: { black: 'black', brown: 'brown', grey: 'grey' },
+    colorChoice: '',
   },
 ];

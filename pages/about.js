@@ -2,9 +2,12 @@ import Head from 'next/head';
 // import Image from 'next/image';
 import Layout from '../components/Layout.js';
 
-export default function About() {
+export default function About(props) {
   return (
-    <Layout>
+    <Layout
+      catQuantity={props.catQuantity}
+      setCartQuantity={props.setCartQuantity}
+    >
       <Head>
         <title>About Page</title>
         <meta

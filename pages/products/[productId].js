@@ -217,14 +217,20 @@ export default function Product(props) {
 
   console.log('checking quantity state again: ' + Number(quantity));
 
+  console.log('the type of quantity is: ' + typeof Number(quantity));
+  console.log(quantity);
+
+  // setting the colorChoice click handler
   const handleColorChange = (event) => {
     setColor(event.target.value);
   };
 
-  console.log('the type of quantity is: ' + typeof Number(quantity));
-  console.log(quantity);
+  console.log('selected color is: ', color);
   return (
-    <Layout>
+    <Layout
+      catQuantity={props.catQuantity}
+      setCartQuantity={props.setCartQuantity}
+    >
       <Head>
         <title>SINGLE PRODUCT: {props.productDetail.title}</title>
       </Head>
@@ -270,14 +276,17 @@ export default function Product(props) {
 
                 <div className="selectBox">
                   <select defaultValue={color} onChange={handleColorChange}>
-                    <option value={props.productDetail.colorChoice.brown}>
-                      {props.productDetail.colorChoice.brown}
+                    <option value="Brown">
+                      {/* {props.productDetail.colorChoice.brown} */}
+                      Brown
                     </option>
-                    <option value={props.productDetail.colorChoice.black}>
-                      {props.productDetail.colorChoice.black}
+                    <option value="Black">
+                      {/* {props.productDetail.colorChoice.black} */}
+                      Black
                     </option>
-                    <option value={props.productDetail.colorChoice.grey}>
-                      {props.productDetail.colorChoice.grey}
+                    <option value="Grey">
+                      {/* {props.productDetail.colorChoice.grey} */}
+                      Grey
                     </option>
                   </select>
                 </div>

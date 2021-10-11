@@ -3,6 +3,7 @@ import 'react-slideshow-image/dist/styles.css';
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useState } from 'react';
 // import { Slide } from 'react-slideshow-image';
 import Layout from '../components/Layout.js';
 import SlideShow from '../components/SlideShow.js';
@@ -56,10 +57,18 @@ const homePageStyle = css`
 `;
 
 export default function Home(props) {
-  console.log('The product should be down here');
-  console.log(props.products);
+  // const [shoppingCartQuantity, setShoppingCartQuantity] = useState(70);
+  // console.log('quantity inside index.js: ', shoppingCartQuantity);
+  // console.log('The product should be down here');
+  // console.log(props.products);
+
+  console.log('Props from index.js', props);
+
   return (
-    <Layout>
+    <Layout
+      catQuantity={props.catQuantity}
+      setCartQuantity={props.setCartQuantity}
+    >
       <Head>
         <title>My Next And React Shop</title>
         <meta
@@ -116,8 +125,8 @@ export default function Home(props) {
 export async function getServerSideProps() {
   const { DUUMMY_PRODUCTS } = await import('../util/database');
 
-  console.log('My products should be');
-  console.log(DUUMMY_PRODUCTS);
+  // console.log('My products should be');
+  // console.log(DUUMMY_PRODUCTS);
 
   return {
     props: {

@@ -159,8 +159,10 @@ const headerStyle = css`
 `;
 // There is a problem with the information i am getting from the cart about the quantity and i have to check it
 export default function Header(props) {
-  console.log('from header here');
-  console.log(props.amount);
+  // console.log('from header here');
+  // console.log(props.amount);
+
+  console.log('props from the header: ', props);
 
   return (
     <header css={headerStyle}>
@@ -198,7 +200,7 @@ export default function Header(props) {
         </button>
 
         <div className="shopCartWrapper">
-          <p>{props.amount}</p>
+          <p>{props.catQuantity}</p>
           <Link href="/products/cart" className="cartIcon">
             <a>
               {props.amount < 1 ? (
