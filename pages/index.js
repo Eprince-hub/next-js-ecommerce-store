@@ -57,7 +57,6 @@ const homePageStyle = css`
 `;
 
 export default function Home(props) {
-  // const [shoppingCartQuantity, setShoppingCartQuantity] = useState(70);
   // console.log('quantity inside index.js: ', shoppingCartQuantity);
   // console.log('The product should be down here');
   // console.log(props.products);

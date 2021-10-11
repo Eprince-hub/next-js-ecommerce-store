@@ -215,6 +215,7 @@ export default function Cart(props) {
   // getting all the cookie objects back from the browser
   const shoppingCartCookies = getParsedCookie('cartInside') || [];
 
+  props.setCartQuantity(100);
   // setting state variables for all prices related codes!
 
   const [productsPrice, setProductsPrice] = useState(0);
@@ -228,7 +229,7 @@ export default function Cart(props) {
   // console.log('This is the item Q State', itemQuantity);
   // );
 
-  const [shoppingCartQuantity, setShoppingCartQuantity] = useState(0);
+  // const [shoppingCartQuantity, setShoppingCartQuantity] = useState(0);
 
   // finding the product id that matches the cookie object id that i fetched from the browser
   const foundProductsWithCookie = shoppingCartCookies.map(
@@ -245,14 +246,10 @@ export default function Cart(props) {
   console.log('ITEMS AMOUNT IN CART');
   console.log(foundProductsWithCookie);
 
-  console.log('TRYING THE REDUCED ARRAY METHOD');
-
   useEffect(() => {
-    props.setCartQuantity(foundProductsWithCookie.length);
+    //  props.setCartQuantity(foundProductsWithCookie.length);
     setProductsPrice(calculateTotalPrice(foundProductsWithCookie));
   }, [foundProductsWithCookie]);
-
-  console.log('prices from state: ', productsPrice);
 
   // calculating the tax Price and shipping price and then add all together as the total price.
   const taxPrice = productsPrice * 0.14;
