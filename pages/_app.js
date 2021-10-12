@@ -1,10 +1,7 @@
 import { css, Global } from '@emotion/react';
 import Head from 'next/head';
-import { useState } from 'react';
 
 function MyApp({ Component, pageProps }) {
-  const [shoppingCartQuantity, setShoppingCartQuantity] = useState();
-  console.log('props from app.js: ', pageProps);
   return (
     <>
       <Global
@@ -27,12 +24,7 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Component
-        catQuantity={shoppingCartQuantity}
-        setCartQuantity={setShoppingCartQuantity}
-        {...pageProps}
-      />
-      <h1>{shoppingCartQuantity}</h1>;
+      <Component {...pageProps} />
     </>
   );
 }

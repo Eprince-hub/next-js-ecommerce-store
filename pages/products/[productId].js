@@ -123,16 +123,6 @@ export default function Product(props) {
   // so i am commenting it out for that reason.
   // const router = useRouter();
   // const { product } = router.query;
-  // console.log(product);
-
-  // Window object is not available on the back end so we would need to
-  // check if it is available in case we want to use it for something like cookies and sessions. like below:
-  /* if (typeof window !== 'undefined') {
-    console.log(window.localStorage);
-  } */
-
-  // the image couldn't link so i used a url instead
-  // console.log('Image should be: ' + props.productDetail.image);
 
   // state variable that will receive the cookie object if there is any of an empty array if none.
   const [cartInside, setCartInside] = useState(
@@ -150,9 +140,6 @@ export default function Product(props) {
 
   // useState for the cookie quantity count state variable
   const [quantityCount, setQuantityCount] = useState(initialQuantityCount);
-
-  console.log('Quantity is:');
-  console.log(quantityCount);
 
   // #####################################
   // Function that will add the item to cart when clicked
@@ -175,7 +162,8 @@ export default function Product(props) {
         {
           id: Number(props.productDetail.id),
           quantityCount: Number(quantity),
-          // color: color, // Have to check why this messed up my application
+          color: color, // this color is being added on the fly as the user selects which color they want.
+          // color2: cartInside.color ? color : '', This logic isn't working, Have to check it later
         }, // add the new created cookie object.
       ];
 
@@ -198,9 +186,6 @@ export default function Product(props) {
       //   cookieObjectFound.quantityCount += 1;
       // }
 
-      console.log('This is the type of: ');
-      console.log(cookieObjectFound.quantityCount);
-
       // also set the cookies and the quantity to the new values
 
       setParsedCookie('cartInside', currentCookie);
@@ -215,22 +200,13 @@ export default function Product(props) {
     setQuantity(event.currentTarget.value);
   }
 
-  console.log('checking quantity state again: ' + Number(quantity));
-
-  console.log('the type of quantity is: ' + typeof Number(quantity));
-  console.log(quantity);
-
   // setting the colorChoice click handler
   const handleColorChange = (event) => {
     setColor(event.target.value);
   };
 
-  console.log('selected color is: ', color);
   return (
-    <Layout
-      catQuantity={props.catQuantity}
-      setCartQuantity={props.setCartQuantity}
-    >
+    <Layout>
       <Head>
         <title>SINGLE PRODUCT: {props.productDetail.title}</title>
       </Head>
@@ -321,14 +297,9 @@ export default function Product(props) {
 // ###############################################
 // getServerSideProps receives an object parameter called context which have all of the information
 // about the requests that we make and it has properties that we can use to get the url from the backend.
-// eg console.log(context.query.productId)
+
 export async function getServerSideProps(context) {
   const { DUUMMY_PRODUCTS } = await import('../../util/database');
-
-  // the property that comes after the query object is the name of the dynamic routing file eg productId
-  // console.log(context.query.productId);
-
-  // console.log(DUUMMY_PRODUCTS);
 
   const productUrl = context.query.productId;
 
@@ -339,7 +310,6 @@ export async function getServerSideProps(context) {
     return productUrl === product.id;
   });
 
-  console.log(productDetail);
   return {
     props: {
       // We are passing the returned product detail to the props from the back end here to make available for use on the front-end

@@ -86,12 +86,8 @@ const productPageStyle = css`
 // having this props as a parameter gives this function the ability
 // to accept the props from the getServerSideProps function down this file
 export default function Products(props) {
-  console.log('props from the Products Page: ', props.catQuantity);
   return (
-    <Layout
-      catQuantity={props.catQuantity}
-      setCartQuantity={props.setCartQuantity}
-    >
+    <Layout>
       <section css={productPageStyle}>
         <Head>
           <title>ALL PRODUCTS PAGE</title>
@@ -156,16 +152,10 @@ export default function Products(props) {
 export async function getServerSideProps(context) {
   // Getting the products from the database where it stored!
   const { DUUMMY_PRODUCTS } = await import('../../util/database');
-  // console.log(DUUMMY_PRODUCTS);
 
   // creating cookies from the cookie we get from the context object
   const cookies = context.req.cookies.cartInside || '[]'; // empty array in case the cookie object is undefined(avoids JSON error)
   const cartInside = JSON.parse(cookies);
-
-  // #########
-  // troubleshoot
-  // console.log('cartInside OBJ: ');
-  // console.log(cartInside);
 
   // mapping through all the products and checking if the single product already has the same id that would in the cookie obj
   const itemInsideCart = DUUMMY_PRODUCTS.map((product) => {

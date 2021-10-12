@@ -56,17 +56,8 @@ const homePageStyle = css`
 `;
 
 export default function Home(props) {
-  // console.log('quantity inside index.js: ', shoppingCartQuantity);
-  // console.log('The product should be down here');
-  // console.log(props.products);
-
-  console.log('Props from index.js', props);
-
   return (
-    <Layout
-      catQuantity={props.catQuantity}
-      setCartQuantity={props.setCartQuantity}
-    >
+    <Layout>
       <Head>
         <title>My Next And React Shop</title>
         <meta
@@ -122,9 +113,6 @@ export default function Home(props) {
 
 export async function getServerSideProps() {
   const { DUUMMY_PRODUCTS } = await import('../util/database');
-
-  // console.log('My products should be');
-  // console.log(DUUMMY_PRODUCTS);
 
   return {
     props: {

@@ -211,7 +211,6 @@ const cartStyles = css`
 `;
 
 export default function Cart(props) {
-  console.log('props from the cart page: ', props);
   // getting all the cookie objects back from the browser
   const shoppingCartCookies = getParsedCookie('cartInside') || [];
 
@@ -222,19 +221,15 @@ export default function Cart(props) {
 
   // i must check this code and how it works is is still equals zero when i log it in
   const [itemQuantity, setItemQuantity] = useState(0);
-  // const [cartInside, setCartInside] = useState(
-  //   getParsedCookie('cartInside') || [],
-  // console.log('This is the item Q State', itemQuantity);
-  // );
 
   // ######### Try to send the cart quantity to the cookie or local storage and get it from there wherever i need it.
 
-  const [newCartQuantity, setNewCartQuantity] = useState();
+  // const [newCartQuantity, setNewCartQuantity] = useState();
 
-  const cartQuantityStorage =
-    typeof window === 'undefined' ? [] : window.localStorage;
+  // const cartQuantityStorage =
+  //   typeof window === 'undefined' ? [] : window.localStorage;
 
-  cartQuantityStorage.setItem('cartQuantity', newCartQuantity);
+  // cartQuantityStorage.setItem('cartQuantity', newCartQuantity);
 
   // const [shoppingCartQuantity, setShoppingCartQuantity] = useState(0);
 
@@ -244,69 +239,24 @@ export default function Cart(props) {
       const itemAndCookieMatched = props.products.find((product) => {
         return Number(product.id) === individualCookieObj.id;
       });
-
       return itemAndCookieMatched;
     },
   );
 
-  // All the items in the cart
-  console.log('ITEMS AMOUNT IN CART');
-  console.log(foundProductsWithCookie);
-
   // passing the two set state variables through the useEffect
   useEffect(() => {
-    props.setCartQuantity(foundProductsWithCookie.length);
     setProductsPrice(calculateTotalPrice(foundProductsWithCookie));
   }, [foundProductsWithCookie]);
 
   // This is for the new set cart quantity state variable that i am trying to see if i can get from the cookies of local storage
-  useEffect(() => {
-    setNewCartQuantity(foundProductsWithCookie.length);
-  }, [foundProductsWithCookie]);
+  // useEffect(() => {
+  //   setNewCartQuantity(foundProductsWithCookie.length);
+  // }, [foundProductsWithCookie]);
 
   // calculating the tax Price and shipping price and then add all together as the total price.
   const taxPrice = productsPrice * 0.13;
   const shippingPrice = productsPrice > 2000 ? 0 : 50;
   const totalPrice = Number(productsPrice) + (taxPrice + shippingPrice);
-
-  // i was implementing the cart count like this before but i added both the cart count and the product price to one useEffect up there!
-  // setting the shoppingCart quantity
-  // useEffect(() => {
-  //   setShoppingCartQuantity(foundProductsWithCookie.length);
-  // }, []);
-
-  // ########################################
-  // function that increase the quantity
-  // function increaseItemQuantity() {
-  //   // getting the current quantity back from the cookie
-  //   const currentCookieQuantity = getParsedCookie('cartInside') || [];
-
-  //   // the found product with cookie here is an array of all the product objects that is added to the cart
-  //   foundProductsWithCookie.forEach((expectation) => {
-  //     currentCookieQuantity.find((singleCookieObj) => {
-  //       // i looped over it to find a match for the product in the cart and the corresponding cookie.
-  //       if (Number(expectation.id) === singleCookieObj.id) {
-  //         // i didn't have to return anything so i just used the value true or false to increase the
-  //         // quantity of the item in the cart when true and nothing when not.
-  //         console.log('New value should start here');
-  //         const newQuantityValue = (expectation.quantity += 1);
-
-  //         // making the cookie quantity the same as the quantity of the items in the cart
-  //         singleCookieObj.quantityCount = newQuantityValue;
-
-  //         setItemQuantity(newQuantityValue);
-  //         // #####################################
-
-  //         // event.currentTarget = newQuantityValue;
-  //       }
-  //     });
-  //   });
-
-  //   // setting the new cookie quantity to reflect in the browser
-  //   setParsedCookie('cartInside', currentCookieQuantity);
-  // }
-
-  // #################################### Try Increment another way
 
   function makeQuantityIncrement(singleProductObj) {
     // getting the current quantity back from the cookie
@@ -318,7 +268,6 @@ export default function Cart(props) {
       if (Number(singleProductObj.id) === singleCookieObj.id) {
         // i didn't have to return anything so i just used the value true or false to increase the
         // quantity of the item in the cart when true and nothing when not.
-        console.log('New value should start here');
         const newQuantityValue = (singleProductObj.quantity += 1);
 
         // making the cookie quantity the same as the quantity of the items in the cart
@@ -327,9 +276,6 @@ export default function Cart(props) {
         setItemQuantity(newQuantityValue);
       }
     });
-
-    console.log('Checking new cookie Value');
-    console.log(currentCookieQuantity);
 
     // setting the new cookie quantity to reflect in the browser
     setParsedCookie('cartInside', currentCookieQuantity);
@@ -344,7 +290,6 @@ export default function Cart(props) {
     // the found product with cookie here is an array of all the product objects that is added to the cart
     currentCookieQuantity.find((singleCookieObj) => {
       if (Number(singleProductObj.id) === singleCookieObj.id) {
-        console.log('New value should start here');
         const newQuantityValue = (singleProductObj.quantity -= 1);
 
         // making the cookie quantity the same as the quantity of the items in the cart
@@ -353,9 +298,6 @@ export default function Cart(props) {
         setItemQuantity(newQuantityValue);
       }
     });
-
-    console.log('Checking new cookie Value');
-    console.log(currentCookieQuantity);
 
     // setting the new cookie quantity to reflect in the browser
     setParsedCookie('cartInside', currentCookieQuantity);
@@ -389,10 +331,7 @@ export default function Cart(props) {
   // #######################################
 
   return (
-    <Layout
-      catQuantity={props.catQuantity}
-      setCartQuantity={props.setCartQuantity}
-    >
+    <Layout>
       {' '}
       {/* Check please,, trying to pass props through the layout component */}
       <section css={cartStyles}>
@@ -467,7 +406,7 @@ export default function Cart(props) {
 
                       {/* second row */}
                       <div className="colorBox">
-                        <p>COLOR COMES HERE</p>
+                        <p>{itemWithCookie.colorChoice}</p>
                       </div>
                       {/* Third row */}
                       <div className="quantityBox">
@@ -475,10 +414,8 @@ export default function Cart(props) {
                           <button
                             className="deleteFromCart"
                             value={itemWithCookie.id}
-                            onClick={(event) => {
-                              console.log(
-                                'clicked' + event.currentTarget.value,
-                              );
+                            onClick={() => {
+                              /* button Show when the quantity equals one or les */
                               itemDeletionHandler(itemWithCookie);
                             }}
                           >
@@ -487,10 +424,8 @@ export default function Cart(props) {
                         ) : (
                           <button
                             value={itemWithCookie.id}
-                            onClick={(event) => {
-                              console.log(
-                                'clicked' + event.currentTarget.value,
-                              );
+                            onClick={() => {
+                              /* button Show when the quantity greater than one & only decrease when not equals one */
                               itemWithCookie.quantity > 1
                                 ? makeQuantityDecrement(itemWithCookie)
                                 : stopDecrement();
@@ -504,8 +439,8 @@ export default function Cart(props) {
 
                         <button
                           value={itemWithCookie.id}
-                          onClick={(event) => {
-                            console.log('clicked' + event.currentTarget.value);
+                          onClick={() => {
+                            /* button always visible for increment*/
                             makeQuantityIncrement(itemWithCookie);
                           }}
                         >
@@ -582,6 +517,9 @@ export async function getServerSideProps(context) {
 
         // if the item is in the cart then the quantity i got back from the cookie should be added to it, if not, it should be null.
         quantity: isTheItemInCart ? userObj.quantityCount : null,
+
+        // if the item is in the cart then the color i got back from the cookie should be added to it, if not, it should be ''.
+        colorChoice: isTheItemInCart ? userObj.color : '',
       };
     } else {
       return ''; /* Make sure this is working the way it should */

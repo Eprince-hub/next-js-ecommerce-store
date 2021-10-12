@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import logo from '../public/images/utilityImages/logo-icon.png';
 
@@ -160,20 +159,6 @@ const headerStyle = css`
 `;
 // There is a problem with the information i am getting from the cart about the quantity and i have to check it
 export default function Header(props) {
-  // console.log('from header here');
-  // console.log(props.amount);
-
-  console.log('props from the header: ', props);
-
-  const cartQuantityStorage =
-    typeof window === 'undefined' ? [] : window.localStorage;
-
-  console.log('locate storage from header: ', cartQuantityStorage.cartQuantity);
-
-  const [newCartQuantity, setNewCartQuantity] = useState(
-    cartQuantityStorage.cartQuantity,
-  );
-
   return (
     <header css={headerStyle}>
       <div className="logoWrapper">
@@ -210,7 +195,7 @@ export default function Header(props) {
         </button>
 
         <div className="shopCartWrapper">
-          <p>{newCartQuantity}</p>
+          <p>{/* newCartQuantity */}</p>
           <Link href="/products/cart" className="cartIcon">
             <a>
               {props.amount < 1 ? (
