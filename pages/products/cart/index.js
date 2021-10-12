@@ -216,7 +216,6 @@ export default function Cart(props) {
   const shoppingCartCookies = getParsedCookie('cartInside') || [];
 
   // setting state variables for all prices related codes!
-
   const [productsPrice, setProductsPrice] = useState(0);
 
   // setting the quantities
@@ -227,6 +226,15 @@ export default function Cart(props) {
   //   getParsedCookie('cartInside') || [],
   // console.log('This is the item Q State', itemQuantity);
   // );
+
+  // ######### Try to send the cart quantity to the cookie or local storage and get it from there wherever i need it.
+
+  const [newCartQuantity, setNewCartQuantity] = useState();
+
+  const cartQuantityStorage =
+    typeof window === 'undefined' ? [] : window.localStorage;
+
+  cartQuantityStorage.setItem('cartQuantity', newCartQuantity);
 
   // const [shoppingCartQuantity, setShoppingCartQuantity] = useState(0);
 
@@ -245,9 +253,15 @@ export default function Cart(props) {
   console.log('ITEMS AMOUNT IN CART');
   console.log(foundProductsWithCookie);
 
+  // passing the two set state variables through the useEffect
   useEffect(() => {
     props.setCartQuantity(foundProductsWithCookie.length);
     setProductsPrice(calculateTotalPrice(foundProductsWithCookie));
+  }, [foundProductsWithCookie]);
+
+  // This is for the new set cart quantity state variable that i am trying to see if i can get from the cookies of local storage
+  useEffect(() => {
+    setNewCartQuantity(foundProductsWithCookie.length);
   }, [foundProductsWithCookie]);
 
   // calculating the tax Price and shipping price and then add all together as the total price.
@@ -532,6 +546,8 @@ export default function Cart(props) {
             </ul>
           </div>
         </div>
+
+        <button>PROCEED WITH YOUR ORDER</button>
       </section>
     </Layout>
   );
