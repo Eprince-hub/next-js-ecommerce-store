@@ -2,8 +2,8 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-// import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import { getParsedCookie, setParsedCookie } from '../../util/cookies';
 
@@ -110,8 +110,9 @@ const singlePageStyle = css`
 // the dynamic rout for single products where each individual product will be displayed with their detail information.
 
 export default function Product(props) {
-  // creating state variables to control quantity and color
+  const router = useRouter();
 
+  // creating state variables to control quantity and color
   const [quantity, setQuantity] = useState(1);
 
   const [color, setColor] = useState('brown');
@@ -142,6 +143,7 @@ export default function Product(props) {
   const [quantityCount, setQuantityCount] = useState(initialQuantityCount);
 
   // #####################################
+
   // Function that will add the item to cart when clicked
   function addToCartHandler() {
     const currentCookie = getParsedCookie('cartInside') || []; // we get the current state of the cookie as the browser loads.
@@ -192,7 +194,7 @@ export default function Product(props) {
       setQuantityCount(cookieObjectFound.quantityCount);
     }
 
-    alert('Item added to Cart');
+    // alert('Item added to Cart');
   }
 
   // Functions that controls the quantity
@@ -286,7 +288,14 @@ export default function Product(props) {
               </div>
             </div>
 
-            <button onClick={addToCartHandler}>ADD TO CART</button>
+            <button
+              onClick={() => {
+                addToCartHandler();
+                router.push('/products/cart');
+              }}
+            >
+              ADD TO CART
+            </button>
           </div>
         </div>
       </section>
