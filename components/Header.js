@@ -195,7 +195,7 @@ export default function Header(props) {
         </button>
 
         <div className="shopCartWrapper">
-          <p>{/* newCartQuantity */}</p>
+          <p>{props.greeting}</p>
           <Link href="/products/cart" className="cartIcon">
             <a>
               {props.amount < 1 ? (
