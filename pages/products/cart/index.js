@@ -1,10 +1,12 @@
 import { css } from '@emotion/react';
+import axios from 'axios';
 import Head from 'next/head';
 import Link from 'next/link';
 // import image from 'next/image';
 import { useEffect, useState } from 'react';
 // import Image from 'next/image';
 import Layout from '../../../components/Layout.js';
+import getStripe from '../../../lib/get-stripe.js';
 import { getParsedCookie, setParsedCookie } from '../../../util/cookies';
 import { calculateTotalPrice } from '../../../util/priceChecker';
 
@@ -329,6 +331,26 @@ export default function Cart(props) {
     }
   }
   // #######################################
+  // TRYING TO IMPLEMENT STRIPE CHECKOUT
+
+  const redirectCheckout = async () => {
+    // Create Stripe checkout
+
+    const {
+      data: { id },
+    } = await axios.post('../api/checkout_sessions', {
+      items: Object.entries(foundProductsWithCookie).map(
+        ([_, { id, quantity }]) => ({
+          price: id,
+          quantity,
+        }),
+      ),
+    });
+
+    // Redirect to checkout
+    const stripe = await getStripe();
+    await stripe.redirectToCheckout({ sessionId: id });
+  };
 
   return (
     <Layout>
@@ -355,7 +377,7 @@ export default function Cart(props) {
           <div>
             <button>PayPal Checkout</button>
             <p>OR</p>
-            <button>PROCEED WITH YOUR ORDER</button>
+            <button onClick={redirectCheckout}>PROCEED WITH YOUR ORDER</button>
           </div>
         </div>
 
