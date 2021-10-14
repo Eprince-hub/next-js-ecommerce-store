@@ -1,6 +1,6 @@
 // import fs from 'node:fs';
 
-export const DUUMMY_PRODUCTS = [
+export const myProducts = [
   // this product object should have an array of images to display on the detail product page.
   // it should have detail description of the products.
   // it should color for users to choose,

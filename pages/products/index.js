@@ -98,7 +98,7 @@ export default function Products(props) {
           <ul>
             {/* mapping through the props value from the getServerSideProps function to get the array of
 				products objects */}
-            {props.DUUMMY_PRODUCTS.map((product) => {
+            {props.myProducts.map((product) => {
               return (
                 <li key={`product-li-${product.id}`}>
                   <Link href={`/products/${product.id}`}>
@@ -151,14 +151,14 @@ export default function Products(props) {
 // backend database file that we created
 export async function getServerSideProps(context) {
   // Getting the products from the database where it stored!
-  const { DUUMMY_PRODUCTS } = await import('../../util/database');
+  const { myProducts } = await import('../../util/database');
 
   // creating cookies from the cookie we get from the context object
   const cookies = context.req.cookies.cartInside || '[]'; // empty array in case the cookie object is undefined(avoids JSON error)
   const cartInside = JSON.parse(cookies);
 
   // mapping through all the products and checking if the single product already has the same id that would in the cookie obj
-  const itemInsideCart = DUUMMY_PRODUCTS.map((product) => {
+  const itemInsideCart = myProducts.map((product) => {
     const isTheItemInCart = cartInside.some((userCookieObj) => {
       return Number(product.id) === userCookieObj.id;
     });
@@ -180,9 +180,9 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      // productsLists: DUUMMY_PRODUCTS, It can be done this way or as i did it below
+      // productsLists: myProducts, It can be done this way or as i did it below
 
-      DUUMMY_PRODUCTS: itemInsideCart,
+      myProducts: itemInsideCart,
     },
   };
 }

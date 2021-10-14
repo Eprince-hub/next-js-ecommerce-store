@@ -112,11 +112,11 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-  const { DUUMMY_PRODUCTS } = await import('../util/database');
+  const { myProducts } = await import('../util/database');
 
   return {
     props: {
-      products: DUUMMY_PRODUCTS,
+      products: myProducts,
     },
   };
 }

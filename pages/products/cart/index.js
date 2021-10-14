@@ -492,7 +492,7 @@ export default function Cart(props) {
 
 export async function getServerSideProps(context) {
   // getting the products from the dataBase
-  const { DUUMMY_PRODUCTS } = await import('../../../util/database');
+  const { myProducts } = await import('../../../util/database');
 
   // i get information back from the cookie in the browser which should be the cookies that the user
   // has created as he or she clicked the add to cart button which means that the information contained in this cookies
@@ -501,7 +501,7 @@ export async function getServerSideProps(context) {
   const cartInside = JSON.parse(cookies);
 
   // mapping through the products array and getting the match between the information from the cookies and the matching products.
-  const itemInsideCart = DUUMMY_PRODUCTS.map((product) => {
+  const itemInsideCart = myProducts.map((product) => {
     const isTheItemInCart = cartInside.some((productCookieObj) => {
       return Number(product.id) === productCookieObj.id;
     });
@@ -529,7 +529,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       products: itemInsideCart,
-      // products: DUUMMY_PRODUCTS || null
+      // products: myProducts || null
     },
   };
 }
