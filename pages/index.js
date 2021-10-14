@@ -112,7 +112,10 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-  const { myProducts } = await import('../util/database');
+  // Product info comming from Database.
+  const { getProducts } = await import('../util/database');
+
+  const myProducts = await getProducts();
 
   return {
     props: {

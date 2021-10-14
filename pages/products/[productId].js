@@ -308,16 +308,21 @@ export default function Product(props) {
 // about the requests that we make and it has properties that we can use to get the url from the backend.
 
 export async function getServerSideProps(context) {
-  const { myProducts } = await import('../../util/database');
+  // const { myProducts } = await import('../../util/database');
 
-  const productUrl = context.query.productId;
+  const { getSingleProduct } = await import('../../util/database');
+
+  // const productUrl = context.query.productId;
+  const myProduct = await getSingleProduct(context.query.productId);
 
   // this function finds any product that will match the id we have in the product object array
   // with the product that the user wants to view the detail in this case.
   // check the product url and id to make sure they are numbers and not string to number comparison.
-  const productDetail = myProducts.find((product) => {
+  /*  const productDetail = myProducts.find((product) => {
     return productUrl === product.id;
-  });
+  }); */
+
+  const productDetail = myProduct;
 
   return {
     props: {

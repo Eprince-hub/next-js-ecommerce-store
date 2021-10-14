@@ -214,6 +214,16 @@ export default function Cart(props) {
   // getting all the cookie objects back from the browser
   const shoppingCartCookies = getParsedCookie('cartInside') || [];
 
+  console.log('products from server side: ', props.products);
+
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(
+      'cartItemsQuantity',
+
+      JSON.stringify(props.products.length),
+    );
+  }
+
   // setting state variables for all prices related codes!
   const [productsPrice, setProductsPrice] = useState(0);
 
@@ -492,7 +502,9 @@ export default function Cart(props) {
 
 export async function getServerSideProps(context) {
   // getting the products from the dataBase
-  const { myProducts } = await import('../../../util/database');
+  const { getCartProductsFromCookie, getCookieIds } = await import(
+    '../../../util/database'
+  );
 
   // i get information back from the cookie in the browser which should be the cookies that the user
   // has created as he or she clicked the add to cart button which means that the information contained in this cookies
@@ -500,8 +512,14 @@ export async function getServerSideProps(context) {
   const cookies = context.req.cookies.cartInside || '[]';
   const cartInside = JSON.parse(cookies);
 
+  // extracting the ids of all the returned cookie object to pass to the DB query.
+  const cookieObjectIds = getCookieIds(cartInside);
+
+  // getting the matching products of the cookie ids from the DB.
+  const productCookieMatch = await getCartProductsFromCookie(cookieObjectIds);
+
   // mapping through the products array and getting the match between the information from the cookies and the matching products.
-  const itemInsideCart = myProducts.map((product) => {
+  const itemInsideCart = productCookieMatch.map((product) => {
     const isTheItemInCart = cartInside.some((productCookieObj) => {
       return Number(product.id) === productCookieObj.id;
     });
@@ -510,10 +528,13 @@ export async function getServerSideProps(context) {
       return cookieOBJ.id === Number(product.id);
     });
 
+    // console.log('userObj:', userObj);
+
     if (isTheItemInCart) {
+      console.log('The item in Cart: ', isTheItemInCart);
       return {
         ...product,
-        cartInside: isTheItemInCart,
+        // cartInside: isTheItemInCart,
 
         // if the item is in the cart then the quantity i got back from the cookie should be added to it, if not, it should be null.
         quantity: isTheItemInCart ? userObj.quantityCount : null,
@@ -526,6 +547,8 @@ export async function getServerSideProps(context) {
     }
   });
 
+  console.log('itemInsideCart:', itemInsideCart);
+
   return {
     props: {
       products: itemInsideCart,
@@ -533,3 +556,118 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
+// ################################ MUST CHECK FOR OPTIMIZATION
+
+// export async function getServerSideProps(context) {
+//   // getting the products from the dataBase
+//   const { myProducts, getCartProductsFromCookie, getCookieIds } = await import(
+//     '../../../util/database'
+//   );
+
+//   // i get information back from the cookie in the browser which should be the cookies that the user
+//   // has created as he or she clicked the add to cart button which means that the information contained in this cookies
+//   // should have a matching product from the database
+//   const cookies = context.req.cookies.cartInside || '[]';
+//   const cartInside = JSON.parse(cookies);
+
+//   // extracting the ids of all the returned cookie object to pass to the DB query.
+//   const cookieObjectIds = getCookieIds(cartInside);
+
+//   // getting the matching products of the cookie ids from the DB.
+//   const productCookieMatch = await getCartProductsFromCookie(cookieObjectIds);
+
+//   console.log('product and cookie match: ', productCookieMatch);
+
+//   console.log('cartInside: ', cartInside);
+
+//   const checkingNewValue = {
+//     ...productCookieMatch[2],
+//     quantity: 36,
+//     colorChoice: 'black',
+//   };
+
+//   /* const justChectTheValueAgain = productCookieMatch.map((checkedproduct) => {
+//     cartInside.map((cookieItems) => {
+//       return {
+//         ...checkedproduct,
+//         quantity: cookieItems.quantityCount,
+//         colorChoice: cookieItems.color,
+//       };
+//     }); */
+
+//   let newProductObj = [];
+//   const justChectTheValueAgain = productCookieMatch.forEach(
+//     (checkedproduct) => {
+//       cartInside.forEach((cookieItems) => {
+//         const productObject = {
+//           ...checkedproduct,
+//           quantity: cookieItems.quantityCount,
+//           colorChoice: cookieItems.color,
+//         };
+//         /*  return newProductObj.push({
+//         ...checkedproduct,
+//         quantity: cookieItems.quantityCount,
+//         colorChoice: cookieItems.color,
+//       }); */
+
+//         return newProductObj.push(productObject);
+//       });
+//     },
+//   );
+
+//   console.log('newProductObj: ', newProductObj);
+
+//   console.log('justChectTheValueAgain: ', justChectTheValueAgain);
+//   console.log('checkingNewValue: ', checkingNewValue);
+//   for (let i = 0; i < productCookieMatch.length; i++) {
+//     const singleObject = productCookieMatch[i];
+
+//     cartInside.map((boomItem) => {
+//       singleObject.quantity = boomItem.quantityCount;
+//       singleObject.colorChoice = boomItem.color;
+//     });
+
+//     console.log('object inside for loop: ', singleObject);
+//   }
+
+//   // mapping through the products array and getting the match between the information from the cookies and the matching products.
+//   const itemInsideCart = myProducts.map((product) => {
+//     const isTheItemInCart = cartInside.some((productCookieObj) => {
+//       return Number(product.id) === productCookieObj.id;
+//     });
+
+//     const userObj = cartInside.find((cookieOBJ) => {
+//       return cookieOBJ.id === Number(product.id);
+//     });
+
+//     console.log('userObj:', userObj);
+
+//     if (isTheItemInCart) {
+//       console.log('The item in Cart: ', isTheItemInCart);
+//       return {
+//         // ...productCookieMatch,
+//         ...product,
+//         // cartInside: isTheItemInCart,
+
+//         // if the item is in the cart then the quantity i got back from the cookie should be added to it, if not, it should be null.
+//         quantity: isTheItemInCart ? userObj.quantityCount : null,
+
+//         // if the item is in the cart then the color i got back from the cookie should be added to it, if not, it should be ''.
+//         colorChoice: isTheItemInCart ? userObj.color : '',
+//       };
+//     } else {
+//       return ''; /* Make sure this is working the way it should */
+//     }
+//   });
+
+//   console.log('itemInsideCart:', itemInsideCart);
+//   // console.log('productCookieMatch:', productCookieMatch);
+
+//   return {
+//     props: {
+//       products: itemInsideCart,
+//       // products: myProducts || null
+//     },
+//   };
+// }

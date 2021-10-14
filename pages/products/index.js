@@ -151,7 +151,10 @@ export default function Products(props) {
 // backend database file that we created
 export async function getServerSideProps(context) {
   // Getting the products from the database where it stored!
-  const { myProducts } = await import('../../util/database');
+  // const { myProducts } = await import('../../util/database');
+  const { getProducts } = await import('../../util/database');
+
+  const myProducts = await getProducts();
 
   // creating cookies from the cookie we get from the context object
   const cookies = context.req.cookies.cartInside || '[]'; // empty array in case the cookie object is undefined(avoids JSON error)
