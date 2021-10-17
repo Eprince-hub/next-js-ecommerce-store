@@ -1,8 +1,8 @@
 export function calculateTotalPrice(arrayOfProductObjects) {
   // make a variable and assign the iteration of the array of the product objects using reduce
-  const allPrices = arrayOfProductObjects.reduce((acc, currProduct) => {
+  const allPrices = arrayOfProductObjects.reduce((acc, currentProduct) => {
     // destructuring the price and quantity property of each product on every iteration
-    const { price, quantity } = currProduct;
+    const { price, quantity } = currentProduct;
 
     // calculating the total price and using parse float to
     const totalPrice = price * quantity;

@@ -15,7 +15,26 @@ export default function Contact(props) {
           content="The Best Next eCommerce shop around here"
         />
       </Head>
-      <h1>This Should be my Contact Page</h1>
+      <section>
+        <h1>This Should be my Contact Page</h1>
+        <div>
+          <form action="#">
+            <div>
+              <label htmlFor="firstName">First Name: </label>
+              <input id="firstName" />
+              <label htmlFor="lastName">Last Name: </label>
+              <input id="lastName" />
+            </div>
+            <label htmlFor="email">Email: </label>
+            <input type="email" id="email" />
+
+            <textarea name="textArea" id="textArea" cols="30" rows="10">
+              Message:
+            </textarea>
+          </form>
+        </div>
+        <div>Place Holder for Pictures and other infos</div>
+      </section>
     </Layout>
   );
 }

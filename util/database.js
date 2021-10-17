@@ -2,6 +2,7 @@
 import camelcaseKeys from 'camelcase-keys';
 import dotenvSafe from 'dotenv-safe';
 import postgres from 'postgres';
+import { extractPositiveCookieValues } from './utilityFunctions';
 
 // // // this line below will Read in the environment variables
 // // // in the .env file , making it possible to connect to postgresSQL
@@ -43,6 +44,9 @@ export async function getSingleProduct(id) {
 // Getting products that would match the product i am getting back from the cookies for my cart items:
 
 export async function getCartProductsFromCookie(cookieIdArray) {
+  // When the cart is empty then just return an empty array, This fixed the error when the cart is empty.
+  if (cookieIdArray.length === 0) return [];
+
   const cartProducts = await sql`
   SELECT
     *
@@ -59,7 +63,10 @@ export async function getCartProductsFromCookie(cookieIdArray) {
 export function getCookieIds(cookieObjects) {
   const cookieIdArrays = [];
 
-  cookieObjects.map((cookieObject) => {
+  // This function is calling the cookie negative value filter and pass in only positive value.
+  const newCookieObjects = extractPositiveCookieValues(cookieObjects);
+
+  newCookieObjects.map((cookieObject) => {
     return cookieIdArrays.push(cookieObject.id);
   });
 

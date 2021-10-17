@@ -224,7 +224,7 @@ export default function Header(props) {
           <p>{cartItemsQuantity}</p>
           <Link href="/products/cart" className="cartIcon">
             <a>
-              {props.amount < 1 ? (
+              {cartItemsQuantity < 1 ? (
                 <img
                   src="../images/utilityImages/cart-empty.png"
                   alt="shopping cart icon"

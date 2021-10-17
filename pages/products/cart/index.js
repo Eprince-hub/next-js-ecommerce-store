@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import Layout from '../../../components/Layout.js';
 import { getParsedCookie, setParsedCookie } from '../../../util/cookies';
 import { calculateTotalPrice } from '../../../util/priceChecker';
+import { extractPositiveCookieValues } from '../../../util/utilityFunctions';
 
 const cartStyles = css`
   max-width: 100vw;
@@ -214,13 +215,30 @@ export default function Cart(props) {
   // getting all the cookie objects back from the browser
   const shoppingCartCookies = getParsedCookie('cartInside') || [];
 
-  console.log('products from server side: ', props.products);
+  // The products coming from the data base, already filtered
+  const [cartProducts, setCartProducts] = useState(props.products);
+
+  // Call a function that filters the positive cookie value and save the result to the state variable filtered cookies
+
+  const [filteredCookies, setFilteredCookies] = useState(
+    extractPositiveCookieValues(shoppingCartCookies),
+  );
+
+  const [cartItemQuantity, setCartItemQuantity] = useState(
+    cartProducts.map((productQuantity) => productQuantity.quantity),
+  );
+
+  console.log('Product initial quantiy: ', cartItemQuantity);
+
+  console.log('Already filtered Cookies: ', filteredCookies);
+
+  console.log('products from server side: ', cartProducts);
 
   if (typeof window !== 'undefined') {
     localStorage.setItem(
       'cartItemsQuantity',
 
-      JSON.stringify(props.products.length),
+      JSON.stringify(cartProducts.length),
     );
   }
 
@@ -230,38 +248,23 @@ export default function Cart(props) {
   // setting the quantities
 
   // i must check this code and how it works is is still equals zero when i log it in
-  const [itemQuantity, setItemQuantity] = useState(0);
-
-  // ######### Try to send the cart quantity to the cookie or local storage and get it from there wherever i need it.
-
-  // const [newCartQuantity, setNewCartQuantity] = useState();
-
-  // const cartQuantityStorage =
-  //   typeof window === 'undefined' ? [] : window.localStorage;
-
-  // cartQuantityStorage.setItem('cartQuantity', newCartQuantity);
-
-  // const [shoppingCartQuantity, setShoppingCartQuantity] = useState(0);
+  // const [itemQuantity, setItemQuantity] = useState(0);
+  // console.log('ItemQuantity values: ', itemQuantity);
 
   // finding the product id that matches the cookie object id that i fetched from the browser
-  const foundProductsWithCookie = shoppingCartCookies.map(
-    (individualCookieObj) => {
-      const itemAndCookieMatched = props.products.find((product) => {
-        return Number(product.id) === individualCookieObj.id;
-      });
-      return itemAndCookieMatched;
-    },
-  );
+  /*   const foundProductsWithCookie = filteredCookies.map((individualCookieObj) => {
+    const itemAndCookieMatched = props.products.find((product) => {
+      return Number(product.id) === individualCookieObj.id;
+    });
+    return itemAndCookieMatched;
+  }); */
 
-  // passing the two set state variables through the useEffect
+  // console.log('FOUND PRODUCTS WITH COOKIES: ', foundProductsWithCookie);
+
+  // passing the product price state variable through a useEffect, needs to be called with two dependencies (cartProducts, cartItemQuantity)
   useEffect(() => {
-    setProductsPrice(calculateTotalPrice(foundProductsWithCookie));
-  }, [foundProductsWithCookie]);
-
-  // This is for the new set cart quantity state variable that i am trying to see if i can get from the cookies of local storage
-  // useEffect(() => {
-  //   setNewCartQuantity(foundProductsWithCookie.length);
-  // }, [foundProductsWithCookie]);
+    setProductsPrice(calculateTotalPrice(cartProducts));
+  }, [cartProducts, cartItemQuantity]);
 
   // calculating the tax Price and shipping price and then add all together as the total price.
   const taxPrice = productsPrice * 0.13;
@@ -270,10 +273,10 @@ export default function Cart(props) {
 
   function makeQuantityIncrement(singleProductObj) {
     // getting the current quantity back from the cookie
-    const currentCookieQuantity = getParsedCookie('cartInside') || [];
+    // const currentCookieQuantity = getParsedCookie('cartInside') || [];
 
     // the found product with cookie here is an array of all the product objects that is added to the cart
-    currentCookieQuantity.find((singleCookieObj) => {
+    filteredCookies.find((singleCookieObj) => {
       // i looped over it to find a match for the product in the cart and the corresponding cookie.
       if (Number(singleProductObj.id) === singleCookieObj.id) {
         // i didn't have to return anything so i just used the value true or false to increase the
@@ -283,34 +286,36 @@ export default function Cart(props) {
         // making the cookie quantity the same as the quantity of the items in the cart
         singleCookieObj.quantityCount = newQuantityValue;
 
-        setItemQuantity(newQuantityValue);
+        setCartItemQuantity(newQuantityValue);
       }
     });
 
     // setting the new cookie quantity to reflect in the browser
-    setParsedCookie('cartInside', currentCookieQuantity);
+    setFilteredCookies(setFilteredCookies);
+
+    setParsedCookie('cartInside', filteredCookies);
   }
 
   // function that decreases the quantity
 
   function makeQuantityDecrement(singleProductObj) {
     // getting the current quantity back from the cookie
-    const currentCookieQuantity = getParsedCookie('cartInside') || [];
+    // const currentCookieQuantity = getParsedCookie('cartInside') || [];
 
     // the found product with cookie here is an array of all the product objects that is added to the cart
-    currentCookieQuantity.find((singleCookieObj) => {
+    filteredCookies.find((singleCookieObj) => {
       if (Number(singleProductObj.id) === singleCookieObj.id) {
         const newQuantityValue = (singleProductObj.quantity -= 1);
 
         // making the cookie quantity the same as the quantity of the items in the cart
         singleCookieObj.quantityCount = newQuantityValue;
 
-        setItemQuantity(newQuantityValue);
+        setCartItemQuantity(newQuantityValue);
       }
     });
 
     // setting the new cookie quantity to reflect in the browser
-    setParsedCookie('cartInside', currentCookieQuantity);
+    setParsedCookie('cartInside', filteredCookies);
   }
 
   // Function that handles decrements limit
@@ -320,24 +325,97 @@ export default function Cart(props) {
 
   // #############################
   // function for deleting item from cart
-
+  /*
   function itemDeletionHandler(singleProductObj) {
-    const currentCookie = getParsedCookie('cartInside') || [];
+    // const currentCookie = getParsedCookie('cartInside') || [];
 
-    const isItemInCart = currentCookie.some((cookieObj) => {
+    const isItemInCart = filteredCookies.some((cookieObj) => {
       return cookieObj.id === Number(singleProductObj.id);
     });
 
     let newCookies;
 
     if (isItemInCart) {
-      newCookies = currentCookie.filter((cookieObj) => {
+      newCookies = filteredCookies.filter((cookieObj) => {
         return cookieObj.id !== Number(singleProductObj.id);
       });
 
       setParsedCookie('cartInside', newCookies);
     }
+
+    console.log('CART PRODUCT BEFORE FILTER: ', cartProducts);
+    const newCartProductValue = cartProducts.filter((singleCartProduct) => {
+      return singleCartProduct !== Number(singleProductObj.id);
+    });
+
+    console.log('CART PRODUCT AFTER FILTER: ', cartProducts);
+
+    console.log('NEW SET CART QUANTITY VALUE: ', newCartProductValue);
+    // setCartProducts(newCartProductValue);
+
+    // console.log('NEW SET CART QUANTITY VALUE: ', setCartProducts);
   }
+ */
+
+  function itemDeletionHandler(singleProductObj) {
+    /*  setCartProducts(
+      cartProducts.filter((filteredProducts) => {
+        return filteredProducts.id !== singleProductObj.id;
+      }),
+    ); */
+
+    /*  setFilteredCookies(
+      filteredCookies.some((returnedCookies) => {
+        return returnedCookies.id !== singleProductObj.id;
+      }),
+    ); */
+
+    const productsToKeep = cartProducts.filter((filteredProducts) => {
+      return filteredProducts.id !== singleProductObj.id;
+    });
+
+    setCartProducts(productsToKeep);
+    console.log('ITEMS TO KEEP ARE : ', productsToKeep);
+
+    const keepingCookies = productsToKeep.map((itemToKeep) => {
+      const cookiesToKeep = filteredCookies.filter((returnedCookies) => {
+        return returnedCookies.id !== itemToKeep.id;
+      });
+
+      console.log('COOKIES TO KEEP FROM INSIDE BUTTON:!: ', cookiesToKeep);
+      return cookiesToKeep;
+    });
+
+    /* cartProducts, setCartProducts */
+
+    setFilteredCookies(keepingCookies);
+    /* filteredCookies, setFilteredCookies */
+
+    console.log('THE KEEPING COOKIES FROM BUTTON: ', keepingCookies);
+    console.log('FILTERED COOKIES FROM BUTTON: ', filteredCookies);
+
+    // setParsedCookie('cartInside', filteredCookies);
+  }
+
+  /*
+  function itemDeletionHandler(singleProductObj) {
+    console.log('CART PRODUCT BEFORE FILTER: ', cartProducts);
+    const newCartProductValue = cartProducts.filter((singleCartProduct) => {
+      return singleCartProduct !== Number(singleProductObj.id);
+    });
+
+    setCartProducts(newCartProductValue);
+    console.log('CART PRODUCT AFTER FILTER: ', cartProducts);
+
+    const newCookies = filteredCookies.filter((cookieObj) => {
+      return cookieObj.id !== Number(singleProductObj.id);
+    });
+
+    setParsedCookie('cartInside', newCookies);
+    return newCartProductValue;
+  }
+ */
+
   // #######################################
 
   return (
@@ -363,17 +441,31 @@ export default function Cart(props) {
             </Link>
           </div>
           <div>
-            <button>PayPal Checkout</button>
+            <button
+              onClick={() => {
+                console.log('you clicked on me!');
+              }}
+              disabled={cartProducts.length !== 0 ? false : true}
+            >
+              PayPal Checkout
+            </button>
             <p>OR</p>
-            <button>PROCEED WITH YOUR ORDER</button>
+            <button
+              onClick={() => {
+                console.log('you clicked on me!');
+              }}
+              disabled={cartProducts.length !== 0 ? false : true}
+            >
+              PROCEED WITH YOUR ORDER
+            </button>
           </div>
         </div>
 
         <div className="cartDisplayWrapper">
           <div>
             <h3 className="itemsCount">
-              {foundProductsWithCookie.length !== 0
-                ? `ITEMS ADDED TO YOUR SHOPPING CART (${foundProductsWithCookie.length})`
+              {cartProducts.length !== 0
+                ? `ITEMS ADDED TO YOUR SHOPPING CART (${cartProducts.length})`
                 : `Your Cart is Empty`}
             </h3>
           </div>
@@ -389,55 +481,55 @@ export default function Cart(props) {
 
           <div className="tableContentWrapper">
             <ul>
-              {foundProductsWithCookie.map((itemWithCookie) => {
+              {cartProducts.map((singleCartProduct) => {
                 return (
-                  <li key={`item-li- ${itemWithCookie.id}`}>
+                  <li key={`item-li- ${singleCartProduct.id}`}>
                     <div className="tableDisplayFlex">
                       {/* First row */}
 
                       <div className="itemsBox">
                         <div>
                           {/*  <image
-                            src={`/images/public/${itemWithCookie.id}.jpg`}
-                            alt={itemWithCookie.title}
+                            src={`/images/public/${singleCartProduct.id}.jpg`}
+                            alt={singleCartProduct.title}
                             width={400}
                             height={500}
                           /> */}
                           <img
-                            src={itemWithCookie.image}
-                            alt={itemWithCookie.title}
+                            src={singleCartProduct.image}
+                            alt={singleCartProduct.title}
                           />
                         </div>
                         <div>
-                          <h3>{itemWithCookie.name}</h3>
-                          <p>{itemWithCookie.title}</p>
+                          <h3>{singleCartProduct.name}</h3>
+                          <p>{singleCartProduct.title}</p>
                         </div>
                       </div>
 
                       {/* second row */}
                       <div className="colorBox">
-                        <p>{itemWithCookie.colorChoice}</p>
+                        <p>{singleCartProduct.colorChoice}</p>
                       </div>
                       {/* Third row */}
                       <div className="quantityBox">
-                        {itemWithCookie.quantity <= 1 ? (
+                        {singleCartProduct.quantity <= 1 ? (
                           <button
                             className="deleteFromCart"
-                            value={itemWithCookie.id}
+                            value={singleCartProduct.id}
                             onClick={() => {
                               /* button Show when the quantity equals one or les */
-                              itemDeletionHandler(itemWithCookie);
+                              itemDeletionHandler(singleCartProduct);
                             }}
                           >
                             <span>&#215;</span>
                           </button>
                         ) : (
                           <button
-                            value={itemWithCookie.id}
+                            value={singleCartProduct.id}
                             onClick={() => {
                               /* button Show when the quantity greater than one & only decrease when not equals one */
-                              itemWithCookie.quantity > 1
-                                ? makeQuantityDecrement(itemWithCookie)
+                              singleCartProduct.quantity > 1
+                                ? makeQuantityDecrement(singleCartProduct)
                                 : stopDecrement();
                             }}
                           >
@@ -445,13 +537,13 @@ export default function Cart(props) {
                           </button>
                         )}
 
-                        <p>{itemWithCookie.quantity}</p>
+                        <p>{singleCartProduct.quantity}</p>
 
                         <button
-                          value={itemWithCookie.id}
+                          value={singleCartProduct.id}
                           onClick={() => {
                             /* button always visible for increment*/
-                            makeQuantityIncrement(itemWithCookie);
+                            makeQuantityIncrement(singleCartProduct);
                           }}
                         >
                           <span>&#43;</span>
@@ -460,7 +552,7 @@ export default function Cart(props) {
 
                       {/* Fourth Row */}
                       <div className="priceBox">
-                        <h2>{`€ ${itemWithCookie.price}`}</h2>
+                        <h2>{`€ ${singleCartProduct.price}`}</h2>
                       </div>
                     </div>
                   </li>
@@ -480,12 +572,20 @@ export default function Cart(props) {
 
                 <div className="shippingPrice">
                   <p>Shipping Price</p>
-                  <strong>{`€ ${shippingPrice.toFixed(2)}`}</strong>
+                  <strong>
+                    {cartProducts.length !== 0
+                      ? `€ ${shippingPrice.toFixed(2)}`
+                      : `€ 0.00`}
+                  </strong>
                 </div>
 
                 <div className="totalPrice">
                   <p>Total Price</p>
-                  <strong>{`€ ${totalPrice.toFixed(2)}`}</strong>
+                  <strong>
+                    {cartProducts.length !== 0
+                      ? `€ ${totalPrice.toFixed(2)}`
+                      : `€ 0.00`}
+                  </strong>
                 </div>
               </div>
             </ul>
@@ -514,6 +614,8 @@ export async function getServerSideProps(context) {
 
   // extracting the ids of all the returned cookie object to pass to the DB query.
   const cookieObjectIds = getCookieIds(cartInside);
+
+  console.log('CookieObjectIds: ', cookieObjectIds);
 
   // getting the matching products of the cookie ids from the DB.
   const productCookieMatch = await getCartProductsFromCookie(cookieObjectIds);
