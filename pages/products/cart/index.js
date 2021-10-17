@@ -7,7 +7,10 @@ import { useEffect, useState } from 'react';
 import Layout from '../../../components/Layout.js';
 import { getParsedCookie, setParsedCookie } from '../../../util/cookies';
 import { calculateTotalPrice } from '../../../util/priceChecker';
-import { extractPositiveCookieValues } from '../../../util/utilityFunctions';
+import {
+  extractPositiveCookieValues,
+  setQuantityLocalStorage,
+} from '../../../util/utilityFunctions';
 
 const cartStyles = css`
   max-width: 100vw;
@@ -219,50 +222,21 @@ export default function Cart(props) {
   const [cartProducts, setCartProducts] = useState(props.products);
 
   // Call a function that filters the positive cookie value and save the result to the state variable filtered cookies
-
   const [filteredCookies, setFilteredCookies] = useState(
     extractPositiveCookieValues(shoppingCartCookies),
   );
 
+  // getting the total quantity of items in the cart for display on the header and other updates.
   const [cartItemQuantity, setCartItemQuantity] = useState(
     cartProducts.map((productQuantity) => productQuantity.quantity),
   );
 
-  console.log('Product initial quantiy: ', cartItemQuantity);
-
-  console.log('Already filtered Cookies: ', filteredCookies);
-
-  console.log('products from server side: ', cartProducts);
-
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(
-      'cartItemsQuantity',
-
-      JSON.stringify(cartProducts.length),
-    );
-  }
-
-  // setting state variables for all prices related codes!
+  // setting state variables for all prices
   const [productsPrice, setProductsPrice] = useState(0);
-
-  // setting the quantities
-
-  // i must check this code and how it works is is still equals zero when i log it in
-  // const [itemQuantity, setItemQuantity] = useState(0);
-  // console.log('ItemQuantity values: ', itemQuantity);
-
-  // finding the product id that matches the cookie object id that i fetched from the browser
-  /*   const foundProductsWithCookie = filteredCookies.map((individualCookieObj) => {
-    const itemAndCookieMatched = props.products.find((product) => {
-      return Number(product.id) === individualCookieObj.id;
-    });
-    return itemAndCookieMatched;
-  }); */
-
-  // console.log('FOUND PRODUCTS WITH COOKIES: ', foundProductsWithCookie);
 
   // passing the product price state variable through a useEffect, needs to be called with two dependencies (cartProducts, cartItemQuantity)
   useEffect(() => {
+    setQuantityLocalStorage(cartProducts); // set the quantity local storage
     setProductsPrice(calculateTotalPrice(cartProducts));
   }, [cartProducts, cartItemQuantity]);
 
@@ -271,38 +245,31 @@ export default function Cart(props) {
   const shippingPrice = productsPrice > 2000 ? 0 : 50;
   const totalPrice = Number(productsPrice) + (taxPrice + shippingPrice);
 
+  // increment the quantity per click
   function makeQuantityIncrement(singleProductObj) {
-    // getting the current quantity back from the cookie
-    // const currentCookieQuantity = getParsedCookie('cartInside') || [];
-
-    // the found product with cookie here is an array of all the product objects that is added to the cart
+    // the filtered cookies here is an array of all the cookie objects from the browser with positive values
     filteredCookies.find((singleCookieObj) => {
       // i looped over it to find a match for the product in the cart and the corresponding cookie.
       if (Number(singleProductObj.id) === singleCookieObj.id) {
-        // i didn't have to return anything so i just used the value true or false to increase the
-        // quantity of the item in the cart when true and nothing when not.
+        // if i find a matching ids, then increment by one on each click
         const newQuantityValue = (singleProductObj.quantity += 1);
 
         // making the cookie quantity the same as the quantity of the items in the cart
         singleCookieObj.quantityCount = newQuantityValue;
 
-        setCartItemQuantity(newQuantityValue);
+        setCartItemQuantity(newQuantityValue); // update the cart Quantity
       }
+      return 0; // return nothing
     });
 
-    // setting the new cookie quantity to reflect in the browser
-    setFilteredCookies(setFilteredCookies);
+    setFilteredCookies(filteredCookies); // update filtered cookies
 
-    setParsedCookie('cartInside', filteredCookies);
+    setParsedCookie('cartInside', filteredCookies); // update cookies in the browser
   }
 
   // function that decreases the quantity
-
   function makeQuantityDecrement(singleProductObj) {
-    // getting the current quantity back from the cookie
-    // const currentCookieQuantity = getParsedCookie('cartInside') || [];
-
-    // the found product with cookie here is an array of all the product objects that is added to the cart
+    // the filtered cookies here is an array of all the cookie objects from the browser with positive values
     filteredCookies.find((singleCookieObj) => {
       if (Number(singleProductObj.id) === singleCookieObj.id) {
         const newQuantityValue = (singleProductObj.quantity -= 1);
@@ -310,12 +277,15 @@ export default function Cart(props) {
         // making the cookie quantity the same as the quantity of the items in the cart
         singleCookieObj.quantityCount = newQuantityValue;
 
-        setCartItemQuantity(newQuantityValue);
+        setCartItemQuantity(newQuantityValue); // update the cart Quantity
       }
+
+      return 0; // return nothing
     });
 
-    // setting the new cookie quantity to reflect in the browser
-    setParsedCookie('cartInside', filteredCookies);
+    setFilteredCookies(filteredCookies); // update filtered cookies
+
+    setParsedCookie('cartInside', filteredCookies); // update cookies in the browser
   }
 
   // Function that handles decrements limit
@@ -323,100 +293,24 @@ export default function Cart(props) {
     console.log('can not be lower than one');
   }
 
-  // #############################
-  // function for deleting item from cart
-  /*
+  // delete the item on click!
   function itemDeletionHandler(singleProductObj) {
-    // const currentCookie = getParsedCookie('cartInside') || [];
+    let cookieToFilter = []; // variable for the thr cookie objects to be returned
 
-    const isItemInCart = filteredCookies.some((cookieObj) => {
-      return cookieObj.id === Number(singleProductObj.id);
-    });
-
-    let newCookies;
-
-    if (isItemInCart) {
-      newCookies = filteredCookies.filter((cookieObj) => {
-        return cookieObj.id !== Number(singleProductObj.id);
-      });
-
-      setParsedCookie('cartInside', newCookies);
-    }
-
-    console.log('CART PRODUCT BEFORE FILTER: ', cartProducts);
-    const newCartProductValue = cartProducts.filter((singleCartProduct) => {
-      return singleCartProduct !== Number(singleProductObj.id);
-    });
-
-    console.log('CART PRODUCT AFTER FILTER: ', cartProducts);
-
-    console.log('NEW SET CART QUANTITY VALUE: ', newCartProductValue);
-    // setCartProducts(newCartProductValue);
-
-    // console.log('NEW SET CART QUANTITY VALUE: ', setCartProducts);
-  }
- */
-
-  function itemDeletionHandler(singleProductObj) {
-    /*  setCartProducts(
-      cartProducts.filter((filteredProducts) => {
-        return filteredProducts.id !== singleProductObj.id;
-      }),
-    ); */
-
-    /*  setFilteredCookies(
-      filteredCookies.some((returnedCookies) => {
-        return returnedCookies.id !== singleProductObj.id;
-      }),
-    ); */
-
+    // filter the products that was not clicked on and save to the products to keep variable
     const productsToKeep = cartProducts.filter((filteredProducts) => {
-      return filteredProducts.id !== singleProductObj.id;
-    });
-
-    setCartProducts(productsToKeep);
-    console.log('ITEMS TO KEEP ARE : ', productsToKeep);
-
-    const keepingCookies = productsToKeep.map((itemToKeep) => {
-      const cookiesToKeep = filteredCookies.filter((returnedCookies) => {
-        return returnedCookies.id !== itemToKeep.id;
+      const returnedProductToKeep = filteredProducts.id !== singleProductObj.id; // product object in this variable on each iteration
+      //  ############################
+      cookieToFilter = filteredCookies.filter((cookiesFiltering) => {
+        return cookiesFiltering.id !== filteredProducts.id;
       });
-
-      console.log('COOKIES TO KEEP FROM INSIDE BUTTON:!: ', cookiesToKeep);
-      return cookiesToKeep;
+      return returnedProductToKeep;
     });
 
-    /* cartProducts, setCartProducts */
-
-    setFilteredCookies(keepingCookies);
-    /* filteredCookies, setFilteredCookies */
-
-    console.log('THE KEEPING COOKIES FROM BUTTON: ', keepingCookies);
-    console.log('FILTERED COOKIES FROM BUTTON: ', filteredCookies);
-
-    // setParsedCookie('cartInside', filteredCookies);
+    setFilteredCookies(cookieToFilter); // update the filtered cookies values
+    setCartProducts(productsToKeep); // update the products in the cart value
+    setParsedCookie('cartInside', cookieToFilter); // update cookies in the browser
   }
-
-  /*
-  function itemDeletionHandler(singleProductObj) {
-    console.log('CART PRODUCT BEFORE FILTER: ', cartProducts);
-    const newCartProductValue = cartProducts.filter((singleCartProduct) => {
-      return singleCartProduct !== Number(singleProductObj.id);
-    });
-
-    setCartProducts(newCartProductValue);
-    console.log('CART PRODUCT AFTER FILTER: ', cartProducts);
-
-    const newCookies = filteredCookies.filter((cookieObj) => {
-      return cookieObj.id !== Number(singleProductObj.id);
-    });
-
-    setParsedCookie('cartInside', newCookies);
-    return newCartProductValue;
-  }
- */
-
-  // #######################################
 
   return (
     <Layout>
@@ -630,8 +524,6 @@ export async function getServerSideProps(context) {
       return cookieOBJ.id === Number(product.id);
     });
 
-    // console.log('userObj:', userObj);
-
     if (isTheItemInCart) {
       console.log('The item in Cart: ', isTheItemInCart);
       return {
@@ -659,7 +551,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-// ################################ MUST CHECK FOR OPTIMIZATION
+// ################################ MUST CHECK FOR OPTIMIZATION ################################
 
 // export async function getServerSideProps(context) {
 //   // getting the products from the dataBase
@@ -773,3 +665,36 @@ export async function getServerSideProps(context) {
 //     },
 //   };
 // }
+// #############################
+// function for deleting item from cart
+/*
+  function itemDeletionHandler(singleProductObj) {
+    // const currentCookie = getParsedCookie('cartInside') || [];
+
+    const isItemInCart = filteredCookies.some((cookieObj) => {
+      return cookieObj.id === Number(singleProductObj.id);
+    });
+
+    let newCookies;
+
+    if (isItemInCart) {
+      newCookies = filteredCookies.filter((cookieObj) => {
+        return cookieObj.id !== Number(singleProductObj.id);
+      });
+
+      setParsedCookie('cartInside', newCookies);
+    }
+
+    console.log('CART PRODUCT BEFORE FILTER: ', cartProducts);
+    const newCartProductValue = cartProducts.filter((singleCartProduct) => {
+      return singleCartProduct !== Number(singleProductObj.id);
+    });
+
+    console.log('CART PRODUCT AFTER FILTER: ', cartProducts);
+
+    console.log('NEW SET CART QUANTITY VALUE: ', newCartProductValue);
+    // setCartProducts(newCartProductValue);
+
+    // console.log('NEW SET CART QUANTITY VALUE: ', setCartProducts);
+  }
+ */
