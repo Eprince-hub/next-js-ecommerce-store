@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { IconContext } from 'react-icons/lib';
 import {
   TiSocialFacebook,
   TiSocialInstagram,

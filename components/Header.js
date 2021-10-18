@@ -159,7 +159,7 @@ const headerStyle = css`
   }
 `;
 // There is a problem with the information i am getting from the cart about the quantity and i have to check it
-export default function Header(props) {
+export default function Header() {
   const [cartItemsQuantity, setCartItemsQuantity] = useState();
   /*
 
@@ -178,8 +178,6 @@ export default function Header(props) {
       const carQuantityRecieved = localStorage.getItem('cartItemsQuantity')
         ? JSON.parse(localStorage.getItem('cartItemsQuantity'))
         : null;
-
-      console.log('From USEEFFECT ON THE HEADER:', carQuantityRecieved);
 
       setCartItemsQuantity(carQuantityRecieved);
     }
@@ -223,8 +221,8 @@ export default function Header(props) {
         <div className="shopCartWrapper">
           <p>{cartItemsQuantity}</p>
           <Link href="/products/cart" className="cartIcon">
-            <a>
-              {cartItemsQuantity < 1 ? (
+            {/*  <a>
+              {cartItemsQuantity >= 1 ? (
                 <img
                   src="../images/utilityImages/cart-empty.png"
                   alt="shopping cart icon"
@@ -235,6 +233,13 @@ export default function Header(props) {
                   alt="shopping cart icon"
                 />
               )}
+            </a> */}
+
+            <a>
+              <img
+                src="../images/utilityImages/cart-empty.png"
+                alt="shopping cart icon"
+              />
             </a>
           </Link>
         </div>
