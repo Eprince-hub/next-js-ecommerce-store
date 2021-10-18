@@ -142,6 +142,7 @@ export default function Product(props) {
   // useState for the cookie quantity count state variable
   const [quantityCount, setQuantityCount] = useState(initialQuantityCount);
 
+  console.log(quantityCount);
   // #####################################
 
   // Function that will add the item to cart when clicked
@@ -280,7 +281,8 @@ export default function Product(props) {
                   <input
                     type="number"
                     name="quantity"
-                    defaultValue={1}
+                    /* defaultValue={1} */
+                    value={quantity}
                     min="1"
                     onChange={itemQuantity}
                   />
