@@ -1,10 +1,11 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Layout from '../../components/Layout';
+import { description, fitting, imageURLS } from '../../productUtility';
 import { getParsedCookie, setParsedCookie } from '../../util/cookies';
 
 const singlePageStyle = css`
@@ -37,6 +38,10 @@ const singlePageStyle = css`
         text-align: center;
         width: 36rem;
         border-radius: 20px;
+
+        img {
+          filter: drop-shadow(0.2rem 0.2rem 0.5rem rgba(20, 20, 180, 0.5));
+        }
       }
 
       .priceDisplay {
@@ -223,8 +228,15 @@ export default function Product(props) {
         <div className="flexDisplayBox">
           <div className="productImageBox">
             <div className="imageBox">
-              <Image
-                src={`/images/${props.productDetail.id}.jpg`}
+              {/*  <Image
+                src={imageURLS[props.productDetail.id]}
+                alt={props.productDetail.title}
+                width={500}
+                height={600}
+              /> */}
+
+              <img
+                src={imageURLS[props.productDetail.id]}
                 alt={props.productDetail.title}
                 width={500}
                 height={600}
@@ -240,12 +252,12 @@ export default function Product(props) {
             <p>
               <strong>DETAILS:</strong>
             </p>
-            <p>{props.productDetail.description}</p>
+            <p>{description[props.productDetail.id]}</p>
 
             <p>
               <strong>FITTING GUIDE:</strong>
             </p>
-            <p>{props.productDetail.fitting}</p>
+            <p>{fitting[props.productDetail.id]}</p>
             <div>
               <p>
                 <strong>COLOUR:</strong>

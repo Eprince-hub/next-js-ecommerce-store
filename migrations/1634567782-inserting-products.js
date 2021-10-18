@@ -1,4 +1,4 @@
-export const myProducts = [
+const myProducts = [
   {
     name: 'Branded Leather Bag1',
     title: 'his Product is loving',
@@ -44,7 +44,7 @@ export const myProducts = [
     title: 'his Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'hhttps://i.imgur.com/8AEg0fK.png',
+    image: 'https://i.imgur.com/8AEg0fK.png',
 
     price: 170,
 
@@ -57,7 +57,7 @@ export const myProducts = [
     title: 'his Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'hhttps://i.imgur.com/uecVpza.png',
+    image: 'https://i.imgur.com/uecVpza.png',
 
     price: 139,
 
@@ -184,7 +184,7 @@ exports.down = async function down(sql) {
 			DELETE FROM
 			  products
 			WHERE
-			  name = ${product.name} AND title = ${product.title} AND quantity = ${product.quantity} AND description = ${product.description} AND price = ${product.price} AND fitting = ${product.fitting} AND color-choice = ${product.colorChoice} AND image = ${product.image};
+			  name = ${product.name} AND title = ${product.title} AND quantity = ${product.quantity} AND description = ${product.description} AND price = ${product.price} AND fitting = ${product.fitting} AND color_choice = ${product.colorChoice} AND image = ${product.image};
 
 	`;
   }

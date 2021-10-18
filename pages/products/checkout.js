@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 // import Image from 'next/image';
 import Layout from '../../components/Layout.js';
+import { imageURLS } from '../../productUtility';
 import { setParsedCookie } from '../../util/cookies';
 import { calculateTotalPrice } from '../../util/priceChecker.js';
 import Success from './success.js';
@@ -280,7 +281,7 @@ export default function Checkout(props) {
                 <li key={`checkout-li-${product.id}`}>
                   <div className="productInfoBox">
                     <div className="imageBox">
-                      <img src={product.image} alt={product.name} />
+                      <img src={imageURLS[product.id]} alt={product.name} />
                     </div>
 
                     <p>{`QTY: ${product.quantity}`}</p>

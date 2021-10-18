@@ -6,6 +6,7 @@ import Link from 'next/link';
 // import { Slide } from 'react-slideshow-image';
 import Layout from '../components/Layout.js';
 import SlideShow from '../components/SlideShow.js';
+import { imageURLS } from '../productUtility';
 
 const homePageStyle = css`
   background: #f2f2ff;
@@ -51,6 +52,7 @@ const homePageStyle = css`
     img.imagemin {
       height: 500px;
       border-radius: 20px;
+      filter: drop-shadow(0.2rem 0.2rem 0.5rem rgba(20, 20, 180, 0.5));
     }
   }
 `;
@@ -84,7 +86,7 @@ export default function Home(props) {
                             {' '}
                             <img
                               className="imagemin"
-                              src={product.image}
+                              src={imageURLS[product.id]}
                               alt={product.name}
                             />
                           </a>

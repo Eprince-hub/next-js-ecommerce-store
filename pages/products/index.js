@@ -2,6 +2,8 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
+// import { descritption as description, fitting, imageURLS } from '../../productUtility';
+import { imageURLS } from '../../productUtility';
 
 const productPageStyle = css`
   width: 100vw;
@@ -32,6 +34,7 @@ const productPageStyle = css`
       a img {
         border-radius: 10px;
         width: 300px;
+        filter: drop-shadow(0.2rem 0.2rem 0.5rem rgba(20, 20, 180, 0.5));
       }
 
       li {
@@ -86,6 +89,8 @@ const productPageStyle = css`
 // having this props as a parameter gives this function the ability
 // to accept the props from the getServerSideProps function down this file
 export default function Products(props) {
+  console.log('PRODUCTS FROM DATABASE INTO FRONT-END: ', props.myProducts);
+
   return (
     <Layout>
       <section css={productPageStyle}>
@@ -103,10 +108,7 @@ export default function Products(props) {
                 <li key={`product-li-${product.id}`}>
                   <Link href={`/products/${product.id}`}>
                     <a>
-                      <img
-                        src={`/images/${product.id}.jpg`}
-                        alt={product.name}
-                      />{' '}
+                      <img src={imageURLS[product.id]} alt={product.name} />{' '}
                       {/* Next Image ain't Working for me */}
                     </a>
                   </Link>
@@ -155,6 +157,8 @@ export async function getServerSideProps(context) {
   const { getProducts } = await import('../../util/database');
 
   const myProducts = await getProducts();
+
+  console.log('PRODUCTS FROM DATABASE: ', myProducts);
 
   // creating cookies from the cookie we get from the context object
   const cookies = context.req.cookies.cartInside || '[]'; // empty array in case the cookie object is undefined(avoids JSON error)

@@ -73,6 +73,10 @@ export function getCookieIds(cookieObjects) {
   return cookieIdArrays;
 }
 
+// ################################################
+// ################################################
+// ################################################
+// ################################################
 // export const myProducts = [
 //   // this product object should have an array of images to display on the detail product page.
 //   // it should have detail description of the products.

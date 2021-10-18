@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 // import image from 'next/image';
 import { useEffect, useState } from 'react';
 import Layout from '../../../components/Layout.js';
+import { imageURLS } from '../../../productUtility';
 import { getParsedCookie, setParsedCookie } from '../../../util/cookies';
 import { calculateTotalPrice } from '../../../util/priceChecker';
 import {
@@ -48,6 +49,7 @@ const cartStyles = css`
 
       button:last-of-type {
         background: #353434;
+        cursor: pointer;
       }
     }
   }
@@ -210,6 +212,21 @@ const cartStyles = css`
 
     .totalPrice {
       font-weight: bold;
+    }
+  }
+
+  .downButtonDiv {
+    width: 70%;
+    margin: 0 auto;
+    text-align: right;
+    .downButton {
+      margin-top: 0.6rem;
+      font-size: 1.1rem;
+      padding: 0.5rem 1rem;
+      color: white;
+      cursor: pointer;
+
+      background: #353434;
     }
   }
 `;
@@ -393,7 +410,7 @@ export default function Cart(props) {
                             height={500}
                           /> */}
                           <img
-                            src={singleCartProduct.image}
+                            src={imageURLS[singleCartProduct.id]}
                             alt={singleCartProduct.title}
                           />
                         </div>
@@ -489,12 +506,15 @@ export default function Cart(props) {
           </div>
         </div>
 
-        <button
-          onClick={handleClick}
-          disabled={cartProducts.length !== 0 ? false : true}
-        >
-          PROCEED WITH YOUR ORDER
-        </button>
+        <div className="downButtonDiv">
+          <button
+            className="downButton"
+            onClick={handleClick}
+            disabled={cartProducts.length !== 0 ? false : true}
+          >
+            PROCEED WITH YOUR ORDER
+          </button>
+        </div>
       </section>
     </Layout>
   );
