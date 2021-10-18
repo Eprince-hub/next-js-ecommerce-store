@@ -1,9 +1,12 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 // import Image from 'next/image';
 import Layout from '../../components/Layout.js';
+import { setParsedCookie } from '../../util/cookies';
 import { calculateTotalPrice } from '../../util/priceChecker.js';
+import Success from './success.js';
 
 const checkoutStyle = css`
   width: 100vw;
@@ -68,7 +71,7 @@ const checkoutStyle = css`
         width: 100%;
         height: 100%; /* Check Check */
 
-        form {
+        .form {
           width: 100%;
           height: 100%;
 
@@ -236,6 +239,7 @@ const checkoutStyle = css`
 
 export default function Checkout(props) {
   const [productsPrice, setProductsPrice] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setProductsPrice(calculateTotalPrice(props.products));
@@ -245,6 +249,19 @@ export default function Checkout(props) {
   const taxPrice = productsPrice * 0.13;
   const shippingPrice = productsPrice > 2000 ? 0 : 50;
   const totalPrice = Number(productsPrice) + (taxPrice + shippingPrice);
+
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+    console.log('I got a click');
+  };
+
+  console.log('Is Open Status: ', isOpen);
+
+  const preventFormDefault = (event) => {
+    event.preventDefault();
+    togglePopup();
+    setParsedCookie('cartInside', []);
+  };
 
   return (
     <Layout>
@@ -306,7 +323,7 @@ export default function Checkout(props) {
             </div>
 
             <div className="formContainer">
-              <form>
+              <form className="form">
                 <div className="userPaymentInfo">
                   <fieldset className="customerInfoField">
                     <legend>Payment Information</legend>
@@ -414,6 +431,7 @@ export default function Checkout(props) {
                   </fieldset>
                 </div>
                 <input
+                  onClick={preventFormDefault}
                   required
                   className="submit"
                   type="submit"
@@ -424,6 +442,21 @@ export default function Checkout(props) {
             </div>
           </div>
         </div>
+      </section>
+
+      <section>
+        <Success
+          handleClose={togglePopup}
+          displayStatus={isOpen ? 'block' : 'none'}
+        >
+          <h1>THANK YOU FOR THE PURCHASE</h1>
+          <h2>PAYMENT OF {` € ${totalPrice}`} WAS SUCCESSFUL</h2>
+          <span>❤❤❤❤❤❤</span>
+
+          <Link href="/products">
+            <a> See More Products</a>
+          </Link>
+        </Success>
       </section>
     </Layout>
   );
