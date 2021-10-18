@@ -4,7 +4,7 @@ const myProducts = [
     title: 'his Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'https://i.imgur.com/SfoXrDf.png',
+    image: '',
 
     price: 299,
 
@@ -18,7 +18,7 @@ const myProducts = [
     title: 'his Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'https://i.imgur.com/7yAhadt.png',
+    image: '',
 
     price: 199,
 
@@ -31,7 +31,7 @@ const myProducts = [
     title: 'his Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'https://i.imgur.com/9LC4JGH.png',
+    image: '',
 
     price: 99,
 
@@ -44,7 +44,7 @@ const myProducts = [
     title: 'his Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'https://i.imgur.com/8AEg0fK.png',
+    image: '',
 
     price: 170,
 
@@ -57,7 +57,7 @@ const myProducts = [
     title: 'his Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'https://i.imgur.com/uecVpza.png',
+    image: '',
 
     price: 139,
 
@@ -70,7 +70,7 @@ const myProducts = [
     title: 'his Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'https://i.imgur.com/fOVozwX.png',
+    image: '',
 
     price: 219,
 
@@ -83,7 +83,7 @@ const myProducts = [
     title: 'his Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'https://i.imgur.com/O4wEyHF.png',
+    image: '',
 
     price: 254,
 
@@ -96,7 +96,7 @@ const myProducts = [
     title: 'his Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'https://i.imgur.com/1KSVLo5.png',
+    image: '',
 
     price: 292,
 
@@ -109,7 +109,7 @@ const myProducts = [
     title: 'his Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'https://i.imgur.com/tIiIiHu.png',
+    image: '',
 
     price: 419,
 
@@ -122,7 +122,7 @@ const myProducts = [
     title: 'This Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'https://i.imgur.com/lsDvh17.png',
+    image: '',
 
     price: 319,
 
@@ -135,7 +135,7 @@ const myProducts = [
     title: 'This Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'https://i.imgur.com/7OiZowP.png',
+    image: '',
 
     price: 319,
 
@@ -148,7 +148,7 @@ const myProducts = [
     title: 'This Product is loving',
     quantity: 0,
     description: `dscr`,
-    image: 'https://i.imgur.com/DmE4HTK.png',
+    image: '',
 
     price: 319,
 
