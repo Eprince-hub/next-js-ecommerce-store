@@ -77,196 +77,43 @@ export function getCookieIds(cookieObjects) {
 // ################################################
 // ################################################
 // ################################################
-// export const myProducts = [
-//   // this product object should have an array of images to display on the detail product page.
-//   // it should have detail description of the products.
-//   // it should color for users to choose,
-//   // it should have quantity for users to choose
-//   // it should have a button add to cart
-//   {
-//     id: '1',
-//     name: 'Branded Leather Bag1',
-//     title: 'Product title',
-//     quantity: 0,
-//     description: `Our full-grain vegetable-tanned leather Duffle bag uses is unlined and has been designed with a pleated top to allow for easier access. Features include solid brass fixtures, including the compartment zip of the internal pocket. The Duffle comes with contrastleather handles pictured and reinforced leather shoulder strap.
 
-// Please note variations in leather colour occur naturally between hide to hide. The leather on the bag will naturally have character and slight imperfections on the leather which we embrace.
+// These are the EXAMPLE OF SQL Functions for the CRUD OPERATIONS
 
-// Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
-//     image: 'https://i.imgur.com/h5cWFHC.jpg',
+// #### Number One: Deleting a single product
+export async function deleteProductById(id) {
+  const product = await sql`
+  DELETE FROM
+    product
+  WHERE
+    id = ${id}
+  RETURNING
+    id,
+    name,
+    title
+  `;
 
-//     price: 299.56,
+  return camelcaseKeys(product[0]);
+  // could also write the return : RETURNING *
+}
 
-//     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
-// 54cm (length) x 34cm (width) x 34cm (height)`,
-//     colorChoice: '',
-//   },
+// ##### NUMBER TWO Updating a product info or User
 
-//   {
-//     id: '2',
-//     name: 'Branded Leather Bag2',
-//     title: 'Product title',
-//     quantity: 0,
-//     description: `Our full-grain vegetable-tanned leather Duffle bag uses is unlined and has been designed with a pleated top to allow for easier access. Features include solid brass fixtures, including the compartment zip of the internal pocket. The Duffle comes with contrastleather handles pictured and reinforced leather shoulder strap.
+export async function updateProductById(id, { name, title, etc }) {
+  const product = await sql`
+  UPDATE
+    product
+  SET
+  name = ${name},
+  title = ${title},
+  every_other_properties = ${etc}
+  WHERE
+    id = ${id}
+  RETURNING
+    id,
+    name,
+    title
+  `;
 
-// Please note variations in leather colour occur naturally between hide to hide. The leather on the bag will naturally have character and slight imperfections on the leather which we embrace.
-
-// Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
-//     image: 'https://i.imgur.com/h5cWFHC.jpg',
-
-//     price: 199.56,
-
-//     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
-// 54cm (length) x 34cm (width) x 34cm (height)`,
-//     colorChoice: '',
-//   },
-//   {
-//     id: '3',
-//     name: 'Branded Leather Bag3',
-//     title: 'Product title',
-//     quantity: 0,
-//     description: `Our full-grain vegetable-tanned leather Duffle bag uses is unlined and has been designed with a pleated top to allow for easier access. Features include solid brass fixtures, including the compartment zip of the internal pocket. The Duffle comes with contrastleather handles pictured and reinforced leather shoulder strap.
-
-// Please note variations in leather colour occur naturally between hide to hide. The leather on the bag will naturally have character and slight imperfections on the leather which we embrace.
-
-// Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
-//     image: 'https://i.imgur.com/h5cWFHC.jpg',
-
-//     price: 99.56,
-
-//     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
-// 54cm (length) x 34cm (width) x 34cm (height)`,
-//     colorChoice: '',
-//   },
-//   {
-//     id: '4',
-//     name: 'Branded Leather Bag4',
-//     title: 'Product title',
-//     quantity: 0,
-//     description: `Our full-grain vegetable-tanned leather Duffle bag uses is unlined and has been designed with a pleated top to allow for easier access. Features include solid brass fixtures, including the compartment zip of the internal pocket. The Duffle comes with contrastleather handles pictured and reinforced leather shoulder strap.
-
-// Please note variations in leather colour occur naturally between hide to hide. The leather on the bag will naturally have character and slight imperfections on the leather which we embrace.
-
-// Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
-//     image: 'https://i.imgur.com/oSvYCl9m.jpg',
-
-//     price: 170.56,
-
-//     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
-// 54cm (length) x 34cm (width) x 34cm (height)`,
-//     colorChoice: '',
-//   },
-//   {
-//     id: '5',
-//     name: 'Branded Leather Bag5',
-//     title: 'Product title',
-//     quantity: 0,
-//     description: `Our full-grain vegetable-tanned leather Duffle bag uses is unlined and has been designed with a pleated top to allow for easier access. Features include solid brass fixtures, including the compartment zip of the internal pocket. The Duffle comes with contrastleather handles pictured and reinforced leather shoulder strap.
-
-// Please note variations in leather colour occur naturally between hide to hide. The leather on the bag will naturally have character and slight imperfections on the leather which we embrace.
-
-// Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
-//     image: 'https://i.imgur.com/G3ZWEv4m.jpg',
-
-//     price: 139.56,
-
-//     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
-// 54cm (length) x 34cm (width) x 34cm (height)`,
-//     colorChoice: '',
-//   },
-//   {
-//     id: '6',
-//     name: 'Branded Leather Bag6',
-//     title: 'Product title',
-//     quantity: 0,
-//     description: `Our full-grain vegetable-tanned leather Duffle bag uses is unlined and has been designed with a pleated top to allow for easier access. Features include solid brass fixtures, including the compartment zip of the internal pocket. The Duffle comes with contrastleather handles pictured and reinforced leather shoulder strap.
-
-// Please note variations in leather colour occur naturally between hide to hide. The leather on the bag will naturally have character and slight imperfections on the leather which we embrace.
-
-// Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
-//     image: 'https://i.imgur.com/h5cWFHC.jpg',
-
-//     price: 219.56,
-
-//     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
-// 54cm (length) x 34cm (width) x 34cm (height)`,
-//     colorChoice: '',
-//   },
-//   {
-//     id: '7',
-//     name: 'Branded Leather Bag7',
-//     title: 'Product title',
-//     quantity: 0,
-//     description: `Our full-grain vegetable-tanned leather Duffle bag uses is unlined and has been designed with a pleated top to allow for easier access. Features include solid brass fixtures, including the compartment zip of the internal pocket. The Duffle comes with contrastleather handles pictured and reinforced leather shoulder strap.
-
-// Please note variations in leather colour occur naturally between hide to hide. The leather on the bag will naturally have character and slight imperfections on the leather which we embrace.
-
-// Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
-//     image: 'https://i.imgur.com/h5cWFHC.jpg',
-
-//     price: 219.56,
-
-//     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
-// 54cm (length) x 34cm (width) x 34cm (height)`,
-//     colorChoice: '',
-//   },
-//   {
-//     id: '8',
-//     name: 'Branded Leather Bag8',
-//     title: 'Product title',
-//     quantity: 0,
-//     description: `Our full-grain vegetable-tanned leather Duffle bag uses is unlined and has been designed with a pleated top to allow for easier access. Features include solid brass fixtures, including the compartment zip of the internal pocket. The Duffle comes with contrastleather handles pictured and reinforced leather shoulder strap.
-
-// Please note variations in leather colour occur naturally between hide to hide. The leather on the bag will naturally have character and slight imperfections on the leather which we embrace.
-
-// Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
-//     image: 'https://i.imgur.com/h5cWFHC.jpg',
-
-//     price: 219.56,
-
-//     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
-// 54cm (length) x 34cm (width) x 34cm (height)`,
-//     colorChoice: '',
-//   },
-//   {
-//     id: '9',
-//     name: 'Branded Leather Bag9',
-//     title: 'Product title',
-//     quantity: 0,
-//     description: `Our full-grain vegetable-tanned leather Duffle bag uses is unlined and has been designed with a pleated top to allow for easier access. Features include solid brass fixtures, including the compartment zip of the internal pocket. The Duffle comes with contrastleather handles pictured and reinforced leather shoulder strap.
-
-// Please note variations in leather colour occur naturally between hide to hide. The leather on the bag will naturally have character and slight imperfections on the leather which we embrace.
-
-// Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
-//     image: 'https://i.imgur.com/h5cWFHC.jpg',
-
-//     price: 219.56,
-
-//     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
-// 54cm (length) x 34cm (width) x 34cm (height)`,
-//     colorChoice: '',
-//   },
-//   {
-//     id: '10',
-//     name: 'Branded Leather Bag10',
-//     title: 'This Product is loving',
-//     quantity: 0,
-//     description: `Our full-grain vegetable-tanned leather Duffle bag uses is unlined and has been designed with a pleated top to allow for easier access. Features include solid brass fixtures, including the compartment zip of the internal pocket. The Duffle comes with contrastleather handles pictured and reinforced leather shoulder strap.
-
-// Please note variations in leather colour occur naturally between hide to hide. The leather on the bag will naturally have character and slight imperfections on the leather which we embrace.
-
-// Please note that all our goods are made-to-order unless stock already exists in our shop in Melbourne. Lead times can be found in our footer below for leather goods and footwear.`,
-//     image: 'https://i.imgur.com/h5cWFHC.jpg',
-
-//     price: 219.56,
-
-//     fitting: `Can work as a carry on bag for short flights (check with your flight provider) or to accompany you during your day-to-day business.
-// 54cm (length) x 34cm (width) x 34cm (height)`,
-//     colorChoice: '',
-//   },
-// ];
-
-// KEYWORDS
-// dscr = description
-// ft = fitting
-// '' = colorChoice
+  return camelcaseKeys(product[0]);
+}
