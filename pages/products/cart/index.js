@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 // import image from 'next/image';
 import { useEffect, useState } from 'react';
-// import Image from 'next/image';
 import Layout from '../../../components/Layout.js';
 import { getParsedCookie, setParsedCookie } from '../../../util/cookies';
 import { calculateTotalPrice } from '../../../util/priceChecker';
@@ -215,6 +215,7 @@ const cartStyles = css`
 `;
 
 export default function Cart(props) {
+  const router = useRouter();
   // getting all the cookie objects back from the browser
   const shoppingCartCookies = getParsedCookie('cartInside') || [];
 
@@ -312,6 +313,10 @@ export default function Cart(props) {
     setParsedCookie('cartInside', cookieToFilter); // update cookies in the browser
   }
 
+  function handleClick() {
+    router.push('/products/checkout');
+  }
+
   return (
     <Layout>
       {' '}
@@ -345,9 +350,7 @@ export default function Cart(props) {
             </button>
             <p>OR</p>
             <button
-              onClick={() => {
-                console.log('you clicked on me!');
-              }}
+              onClick={handleClick}
               disabled={cartProducts.length !== 0 ? false : true}
             >
               PROCEED WITH YOUR ORDER
@@ -486,7 +489,12 @@ export default function Cart(props) {
           </div>
         </div>
 
-        <button>PROCEED WITH YOUR ORDER</button>
+        <button
+          onClick={handleClick}
+          disabled={cartProducts.length !== 0 ? false : true}
+        >
+          PROCEED WITH YOUR ORDER
+        </button>
       </section>
     </Layout>
   );
@@ -509,8 +517,6 @@ export async function getServerSideProps(context) {
   // extracting the ids of all the returned cookie object to pass to the DB query.
   const cookieObjectIds = getCookieIds(cartInside);
 
-  console.log('CookieObjectIds: ', cookieObjectIds);
-
   // getting the matching products of the cookie ids from the DB.
   const productCookieMatch = await getCartProductsFromCookie(cookieObjectIds);
 
@@ -525,7 +531,6 @@ export async function getServerSideProps(context) {
     });
 
     if (isTheItemInCart) {
-      console.log('The item in Cart: ', isTheItemInCart);
       return {
         ...product,
         // cartInside: isTheItemInCart,
@@ -540,8 +545,6 @@ export async function getServerSideProps(context) {
       return ''; /* Make sure this is working the way it should */
     }
   });
-
-  console.log('itemInsideCart:', itemInsideCart);
 
   return {
     props: {
