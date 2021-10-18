@@ -117,3 +117,34 @@ export async function updateProductById(id, { name, title, etc }) {
 
   return camelcaseKeys(product[0]);
 }
+
+// ####### NUMBER THREEE READ PRODUCTS OR USERS
+
+export async function getProd() {
+  const myProducts = await sql`
+  SELECT * FROM products;
+
+  `;
+
+  return myProducts.map((product) => {
+    return camelcaseKeys(product);
+  });
+}
+
+// ############ NUMBER FOUR CREATING USER OR PRODUCT
+
+export async function createProduct({ name, title, etc }) {
+  const product = await sql`
+  INSERT INTO product
+    (name, title, etc)
+  VALUES
+    (${name}, ${title}, ${etc})
+  RETURNING
+    id,
+    name,
+    title,
+    etc
+  `;
+
+  return camelcaseKeys(product[0]);
+}
