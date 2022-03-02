@@ -10,7 +10,6 @@ export function getParsedCookie(key) {
 }
 
 // function that sets the cookie to the browser
-
 export function setParsedCookie(key, value) {
   Cookies.set(key, JSON.stringify(value));
 }

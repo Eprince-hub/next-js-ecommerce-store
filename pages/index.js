@@ -58,6 +58,45 @@ const homePageStyle = css`
 `;
 
 export default function Home(props) {
+  // get cookies function
+  const cookieGet = { cookieKey: 'cookiesSet' };
+  async function FetchCookieHandler(cookieID) {
+    try {
+      const cookieFetched = await fetch('/api/cookies', {
+        method: 'PUT',
+        body: JSON.stringify(cookieID),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return cookieFetched;
+    } catch (error) {
+      console.log('ERROR IS: ', error);
+    }
+    return;
+  }
+
+  // set cookies function
+  const cookieSet = {
+    cookieKey: 'cookiesSet',
+    cookieValue: 'THE VALUE',
+  };
+  async function setCookieHandler(data) {
+    try {
+      const cookieSetted = await fetch('/api/cookies', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return cookieSetted;
+    } catch (error) {
+      console.log('ERROR IS: ', error);
+    }
+    return;
+  }
+
   return (
     <Layout>
       <Head>
@@ -108,6 +147,19 @@ export default function Home(props) {
               })}
           </ul>
         </section>
+      </section>
+
+      <section>
+        <div>
+          <button onClick={() => setCookieHandler(cookieSet)}>
+            Set Cookies
+          </button>
+        </div>
+        <div>
+          <button onClick={() => FetchCookieHandler(cookieGet)}>
+            Get Cookies
+          </button>
+        </div>
       </section>
     </Layout>
   );
